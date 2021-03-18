@@ -67,6 +67,7 @@ class DetailView(generic.DetailView):
     template_name = 'polls/details.html'
 
 
+@method_decorator([teacher_required], name='dispatch')
 class ResultsView(generic.DetailView):
     """Results view of polls app."""
 
