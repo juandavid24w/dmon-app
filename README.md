@@ -2,7 +2,7 @@
 
 A Django project template with CI, gitignore, README, development, and deployment instructions
 
-The project is deployed on Heroku: [https://cmps-453-project-template.herokuapp.com/](https://cmps-453-project-template.herokuapp.com/)
+The project is deployed on Heroku: [http://mysite-tutorial.herokuapp.com/accounts/](http://mysite-tutorial.herokuapp.com/accounts/)
 
 To develop/test this website, clone this repository and follow the instructions:
 
