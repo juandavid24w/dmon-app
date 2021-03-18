@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.utils.timezone import now
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Local imports
 from .models import Choice, Question
@@ -67,8 +68,7 @@ class DetailView(generic.DetailView):
     template_name = 'polls/details.html'
 
 
-@method_decorator([teacher_required], name='dispatch')
-class ResultsView(generic.DetailView):
+class ResultsView(LoginRequiredMixin, generic.DetailView):
     """Results view of polls app."""
 
     model = Question
@@ -82,7 +82,7 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        return render(request, 'polls/detail.html', {
+        return render(request, 'polls/details.html', {
             'question': question,
             'error_message': "You didn't select a choice.", })
     else:

@@ -14,6 +14,8 @@ urlpatterns = [
          login_required(views.CreateChoiceView.as_view()),
          name='create-choice'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
-    path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
-    path('<int:question_id>/vote/', views.vote, name='vote'),
+    path('<int:pk>/results/',
+         login_required(views.ResultsView.as_view()),
+         name='results'),
+    path('<int:question_id>/vote/', login_required(views.vote), name='vote'),
 ]
