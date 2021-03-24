@@ -31,6 +31,7 @@ DEBUG = os.environ.get('DEBUG', 'False') != 'False'
 ALLOWED_HOSTS = [
     '127.0.0.1', 'localhost',
     'mysite-tutorial.herokuapp.com',
+    'cmps-453-template-staging.herokuapp.com'
 ]
 
 
