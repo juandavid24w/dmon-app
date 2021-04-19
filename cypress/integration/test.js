@@ -92,7 +92,6 @@ describe('Teacher: Create Questions', () => {
         cy.get('form').submit()
     })
     it('Test Create Question Button', () => {
-        //test logout hyperlink
         cy.visit('/')
         cy.contains('Create Question')
     })
@@ -105,7 +104,6 @@ describe('Teacher: Create Questions', () => {
         cy.get('form').submit()
     })
     it('Test Add Choice Button', () => {
-        //test logout hyperlink
         cy.visit('/1')
         cy.contains('View Polling Result')
         cy.contains('Add choice').click()
@@ -137,5 +135,42 @@ describe('Teacher: Create Questions', () => {
         cy.visit('/2/choice/add')
         cy.get('input[name = "choice_text"]').type("Choice 4")
         cy.get('form').submit()
+    })
+})
+
+describe('RBAC: Anonymous', () => {
+    it('Available polls', () => {
+        cy.visit('/')
+        cy.contains('Available Polls')
+    })
+    it('View Choices', () => {
+        cy.visit('/1')
+        cy.contains('Choice 1')
+        cy.contains('Choice 2')
+        cy.contains('Choice 3')
+        cy.contains('Choice 4')
+    })
+    it('View Results', () => {
+        cy.visit('/1/results')
+        cy.url().should('include', '/accounts/login/?next=/1/results/')
+        cy.contains('Login')
+    })
+})
+
+describe('RBAC: Student', () => {
+    beforeEach(() => {
+        cy.visit('/accounts/login')
+        cy.get('input[name = "username"]').type(stud_email)
+        cy.get('input[name = "password"]').type(stud_password)
+        cy.get('form').submit()
+    })
+    it('Add Question', () => {
+        cy.visit('/question/add')
+        cy.url().should('include', 'accounts/login/?next=/question/add/')
+        cy.contains('Login')
+    })
+    it('Add Choice', () => {
+        cy.visit('/1/choice/add')
+        cy.contains('Login')
     })
 })
