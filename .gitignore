@@ -26,6 +26,9 @@ django-project/staticfiles/
 # C extensions
 *.so
 
+# Node binaries
+node_modules
+
 # Distribution / packaging
 .Python
 build/
@@ -587,4 +590,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/django,python,vscode,vim,windows,linux,macos,intellij,emacs
-

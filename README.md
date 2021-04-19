@@ -76,6 +76,30 @@ Type 'yes' if the prompt asks you a question.
 python manage.py runserver
 ```
 
+## Install Cypress
+Keep the Django server running in on CMD or terminal.
+
+Assumption: `npm` LTS version is already installed.
+
+Open another CMD prompt and run the following command:
+
+```bash
+npm i cypress --save-dev
+```
+
+This will download the cypress binaries in `node_modules` directory.
+
+`.gitignore` rule ignores `node_modules` directory.
+
+## Run the Cypress tests
+```bash
+npm run e2e
+```
+
+The below command executes all the tests in the Linux terminal
+```bash
+./node_modules/.bin/cypress run --headless --browser chrome
+```
 
 ## Set up GitLab CD
 
