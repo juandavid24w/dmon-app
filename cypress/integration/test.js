@@ -138,6 +138,37 @@ describe('Teacher: Create Questions', () => {
     })
 })
 
+describe('Student: Make a poll', () => {
+    beforeEach(() => {
+        cy.visit('/accounts/login')
+        cy.get('input[name = "username"]').type(stud_email)
+        cy.get('input[name = "password"]').type(stud_password)
+        cy.get('form').submit()
+    })
+    it('Available polls', () => {
+        cy.visit('/')
+        cy.contains('Available Polls')
+        cy.contains('Sample question 1').click()
+        cy.url().should('include', '/1')
+    })
+    it('View Choices', () => {
+        cy.visit('/1')
+        cy.contains('Choice 1')
+        cy.contains('Choice 2')
+        cy.contains('Choice 3')
+        cy.contains('Choice 4')
+        cy.get('input[id = "choice4"]').click()
+        cy.get('form').submit()
+    })
+    it('View Results', () => {
+        cy.visit('/1/results')
+        cy.contains('Choice 1 -- 0 votes')
+        cy.contains('Choice 2 -- 0 votes')
+        cy.contains('Choice 3 -- 0 votes')
+        cy.contains('Choice 4 -- ')
+    })
+})
+
 describe('RBAC: Anonymous', () => {
     it('Available polls', () => {
         cy.visit('/')
