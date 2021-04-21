@@ -9,6 +9,35 @@ test:
         - python manage.py collectstatic
         - python manage.py test
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm
+    - cache/Cypress
+    - node_modules
+
+cypress-e2e:
+    stage: test
+    image: moneymeets/cypress-python
+    before_script:
+        - pip install -r requirements.txt
+        - npm install
+    script:
+        - python manage.py migrate
+        - export DEBUG=True
+        - python manage.py collectstatic
+        - python manage.py runserver & (sleep 2 && npx cypress run)
+    artifacts:
+        expire_in: 1 week
+        when: always
+        paths:
+            - cypress/screenshots
+            - cypress/videos
+        reports:
+            junit:
+                - results/TEST-*.xml
+
+
 development:
     stage: deploy
     before_script:
