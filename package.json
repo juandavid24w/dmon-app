@@ -1,5 +1,5 @@
 {
-    "name": "polls app",
+    "name": "polls-app",
     "version": "1.0.0",
     "description": "Welcome to Polls app",
     "main": "index.js",
