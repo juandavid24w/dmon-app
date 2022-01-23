@@ -8,6 +8,7 @@ test:
         - python manage.py collectstatic --no-input
         - python manage.py loaddata testdb.json
         - coverage run --source='.' manage.py test
+        - coverage report
 
     coverage: '/TOTAL.*\s+(\d+%)$/'
 
