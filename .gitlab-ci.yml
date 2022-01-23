@@ -26,16 +26,7 @@ cypress-e2e:
         - python3 manage.py migrate
         - export DEBUG=True
         - python3 manage.py collectstatic
-        - python3 manage.py runserver & (sleep 2 && npx cypress run)
-    artifacts:
-        expire_in: 1 week
-        when: always
-        paths:
-            - cypress/screenshots
-            - cypress/videos
-        reports:
-            junit:
-                - results/TEST-*.xml
+        - python3 manage.py runserver & (sleep 5 && npx cypress run)
 
 
 development:
