@@ -52,8 +52,8 @@ staging:
     before_script:
         - apt-get update -qy
         - apt-get install -y ruby-dev
-        - gem install faraday -v 1.9.3
         - gem install dpl
+        - gem install faraday -v 1.8.0
     script:
         - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY --run='python manage.py migrate && python manage.py loaddata testdb.json'
     only:
