@@ -8,10 +8,18 @@
   }
 },
 {
+  "model": "sessions.session",
+  "pk": "ylbhdjvhbn3qhnb9wked7xtlun4d8e5e",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGlnrv01JzxmiXa-NA8iR8qkQd4dIKaB9M_NeYsBtbcO2lHkYWZyFE6ffjTA_St8B37HfJpmnvs4jyV2RB13kdeLyvBzu30HDpX1rHWxFpyxEYK5AEMk6j6kaMBFCVMkTI-viXLImaKtjLtkzqWIIFIj3B8iyNzM:1nBUKE:2l74Ki2XHrsVvjjchvrwYV1jGr9XdUccVBV9w0AvhaM",
+    "expire_date": "2022-02-06T04:17:58.913Z"
+  }
+},
+{
   "model": "users.customuser",
   "fields": {
     "password": "pbkdf2_sha256$216000$8tcjLhsu1WsU$mHz14v50X8RsbQ/GWGY39paICXlDoFsp8oey4AylXZc=",
-    "last_login": "2021-03-18T17:57:29.239Z",
+    "last_login": "2022-01-23T04:15:32.875Z",
     "is_superuser": true,
     "first_name": "",
     "last_name": "",
@@ -75,6 +83,24 @@
     "email": "teacher1@gmail.com",
     "is_student": false,
     "is_teacher": true,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "users.customuser",
+  "fields": {
+    "password": "pbkdf2_sha256$216000$ngfz6zY0WmjA$4uswkzG2BJsU1iw6Ajjr8QDxgC0+08XG2aVoOTVjtow=",
+    "last_login": "2022-01-23T04:17:58.906Z",
+    "is_superuser": true,
+    "first_name": "",
+    "last_name": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2022-01-23T04:17:27.003Z",
+    "email": "admin@gmail.com",
+    "is_student": false,
+    "is_teacher": false,
     "groups": [],
     "user_permissions": []
   }
