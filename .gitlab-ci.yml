@@ -26,7 +26,7 @@ cypress-e2e:
         - python3 manage.py migrate
         - export DEBUG=True
         - python3 manage.py collectstatic
-        - python3 manage.py runserver & (sleep 5 && npx cypress run)
+        # - python3 manage.py runserver & (sleep 5 && npx cypress run)
 
 
 development:
