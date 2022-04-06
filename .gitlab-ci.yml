@@ -19,4 +19,4 @@ staging:
         - gem install dpl
         - gem install faraday -v 1.8.0
     script:
-        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY --run='python manage.py migrate && python manage.py loaddata testdb.json'
+        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY --run='python manage.py migrate'

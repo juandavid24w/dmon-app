@@ -28,11 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'This_is_a_test_secret_key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') != 'False'
 
-ALLOWED_HOSTS = [
-    '127.0.0.1', 'localhost',
-    'mysite-tutorial.herokuapp.com',
-    'cmps-453-template-staging.herokuapp.com'
-]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -48,7 +44,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'bootstrap_datepicker_plus',
     'users',
-    'polls',
+    'polls.apps.PollsConfig',
 ]
 
 MIDDLEWARE = [
@@ -147,8 +143,11 @@ STATICFILES_DIRS = [
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 
+# Redirect to home URL after logout (Default redirects to /admin/login/)
+LOGOUT_REDIRECT_URL = '/'
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
