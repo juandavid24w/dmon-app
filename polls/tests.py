@@ -28,7 +28,7 @@ class QuestionModelTest(TestCase):
         [
             (now() + timedelta(days=30), False),
             (now() - timedelta(days=1, seconds=1), False),
-            (now() - timedelta(hours=23, minutes=59, seconds=59), True),
+            (now() - timedelta(hours=23, minutes=59), True),
         ]
     )
     def test_was_published_recently(self, input_date, expected):

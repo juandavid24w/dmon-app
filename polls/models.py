@@ -8,7 +8,7 @@ from django.utils.timezone import now
 class Question(models.Model):
     """Question model class.
 
-    Attributes
+    Attributes:
     ----------
     question_text : string
         Holds the text for the question.
@@ -40,7 +40,7 @@ class Question(models.Model):
 class Choice(models.Model):
     """Choice model class.
 
-    Attributes
+    Attributes:
     ----------
     question : foreign key
         Holds a reference to the Question class object.
