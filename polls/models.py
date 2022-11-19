@@ -1,5 +1,7 @@
-from django.db import models
+"""Polls models."""
 from datetime import timedelta
+
+from django.db import models
 from django.utils.timezone import now
 
 
@@ -14,13 +16,24 @@ class Question(models.Model):
         Holds the date and time of the question.
 
     """
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
 
-    def __str__(self):
-        return self.question_text
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField("date published")
+
+    def __str__(self) -> str:
+        """Return a string representation of Question."""
+        return str(self.question_text)
 
     def was_published_recently(self):
+        """Check if Question was published in last 24 hours.
+
+        Returns:
+        -------
+        bool:
+            True, if published in last 24 hours.
+            False, otherwise.
+
+        """
         return now() >= self.pub_date >= now() - timedelta(days=1)
 
 
@@ -35,9 +48,11 @@ class Choice(models.Model):
         Holds a string that represents a choice.
 
     """
+
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.choice_text
+    def __str__(self) -> str:
+        """Return a string representation of Choice."""
+        return str(self.choice_text)
