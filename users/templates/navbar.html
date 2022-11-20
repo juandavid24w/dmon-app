@@ -12,20 +12,6 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="#navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">
-                        <i class="fa-solid fa-circle-info"></i> About
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'team' %}">
-                        <i class="fa-solid fa-people-group"></i> Team
-                    </a>
-                </li>
-            </ul>
-        </div>
         <div class="navbar-collapse collapse" id="#navbarsExampleDefault">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 {% if user.is_authenticated %}
