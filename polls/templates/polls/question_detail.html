@@ -1,0 +1,63 @@
+{% extends "base_generic.html" %}
+{% block title %}
+    Question: {{ question.question_text }}
+{% endblock title %}
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            {% if error_message %}<div class="alert alert-danger" role="alert">{{ error_message }}</div>{% endif %}
+            <form action="{% url 'polls:vote' question.id %}" method="post">
+                {% csrf_token %}
+                {% for choice in question.choice_set.all %}
+                    <div class="row">
+                        <div class="col-md-1">
+                            <input type="radio"
+                                   name="choice"
+                                   id="choice{{ forloop.counter }}"
+                                   value="{{ choice.id }}"/>
+                        </div>
+                        <div class="col-md-5 mb-1">
+                            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="text-center mb-4">
+                    {% if user.is_authenticated and user.is_student %}
+                        <input class="btn btn-success" type="submit" value="Vote" />
+                    {% else %}
+                        <input class="btn btn-success" type="submit" value="Vote" disabled />
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-4">
+            <div class="text-center">
+                {% if user.is_authenticated and user.is_teacher %}
+                    <a class="btn btn-warning"
+                       href="{% url 'polls:create-choice' question.id %}">
+                        <i class="fa-solid fa-plus"></i> Add choice
+                    </a>
+                    <a class="btn btn-warning" href="{% url 'polls:results' question.id %}">
+                        <i class="fa-solid fa-poll"></i> View Polling Result
+                    </a>
+                {% endif %}
+                {% if user.is_authenticated and user.is_student %}
+                    <a class="btn btn-warning disabled"
+                       href="{% url 'polls:create-choice' question.id %}"
+                       role="button"
+                       aria-disabled="true">
+                        <i class="fa-solid fa-plus"></i> Add choice
+                    </a>
+                    <a class="btn btn-warning disabled"
+                       href="{% url 'polls:results' question.id %}"
+                       role="button"
+                       aria-disabled="true">
+                        <i class="fa-solid fa-poll"></i> View Polling Result
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

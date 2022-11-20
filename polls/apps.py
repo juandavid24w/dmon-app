@@ -1,5 +1,8 @@
+"""Config for polls app."""
 from django.apps import AppConfig
 
 
 class PollsConfig(AppConfig):
-    name = 'polls'
+    """Polls app config."""
+
+    name = "polls"
