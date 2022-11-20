@@ -1,25 +1,23 @@
 """Polls app views."""
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
 from django.utils.timezone import now
-from django.views import generic
+from django.views import View, generic
 from django.views.generic.edit import CreateView
 
 # Local imports
 from polls.models import Choice, Question
-from users.decorators import student_required, teacher_required
+from users.mixins import StudentRequiredMixin, TeacherRequiredMixin
 
 
-@method_decorator([teacher_required], name="dispatch")
-class CreateQuestionView(CreateView):
+class CreateQuestionView(TeacherRequiredMixin, CreateView):
     """View to create question."""
 
     model = Question
     fields = ["question_text"]
-    template_name = "polls/create_polls.html"
     success_url = reverse_lazy("polls:index")
 
     def form_valid(self, form):
@@ -28,13 +26,13 @@ class CreateQuestionView(CreateView):
         return super().form_valid(form)
 
 
-@method_decorator([teacher_required], name="dispatch")
-class CreateChoiceView(CreateView):
+class CreateChoiceView(TeacherRequiredMixin, CreateView):
     """View to create choice."""
 
+    login_url = settings.LOGIN_URL
+    redirect_field_name = "redirect_to"
     model = Choice
     fields = ["choice_text"]
-    template_name = "polls/create_choice.html"
 
     def get_success_url(self):
         """Overwrite the `success_url`."""
@@ -51,19 +49,16 @@ class IndexView(generic.ListView):
     """Index view of polls app."""
 
     model = Question
-    template_name = "polls/index.html"
-    context_object_name = "latest_question_list"
 
     def get_queryset(self):
         """Return the last five published questions."""
         return Question.objects.order_by("-pub_date")[:5]
 
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
     """Detail view of polls app."""
 
     model = Question
-    template_name = "polls/details.html"
 
 
 class ResultsView(LoginRequiredMixin, generic.DetailView):
@@ -73,22 +68,24 @@ class ResultsView(LoginRequiredMixin, generic.DetailView):
     template_name = "polls/results.html"
 
 
-@student_required
-def vote(request, question_id):
-    """Vote counter function."""
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST["choice"])
-    except (KeyError, Choice.DoesNotExist):
-        return render(
-            request,
-            "polls/details.html",
-            {
-                "question": question,
-                "error_message": "You didn't select a choice.",
-            },
-        )
-    else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+class SubmitVote(StudentRequiredMixin, View):
+    """Vote View."""
+
+    def post(self, request, question_id):
+        """Vote counter function."""
+        question = get_object_or_404(Question, pk=question_id)
+        try:
+            selected_choice = question.choice_set.get(pk=request.POST["choice"])
+        except (KeyError, Choice.DoesNotExist):
+            return render(
+                request,
+                "polls/details.html",
+                {
+                    "question": question,
+                    "error_message": "You didn't select a choice.",
+                },
+            )
+        else:
+            selected_choice.votes += 1
+            selected_choice.save()
+            return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
