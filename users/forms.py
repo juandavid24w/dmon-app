@@ -1,7 +1,6 @@
 """Forms for accounts app."""
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from django.db import transaction
 
 from users.models import CustomUser
 
@@ -53,8 +52,7 @@ class TeacherSignUpForm(UserCreationForm):
         """Overwrite default method."""
         user = super().save(commit=False)
         user.is_teacher = True
-        if commit:
-            user.save()
+        user.save()
         return user
 
 
@@ -74,11 +72,9 @@ class StudentSignUpForm(UserCreationForm):
             "password2": forms.TextInput(attrs={"class": "form-control"}),
         }
 
-    @transaction.atomic
     def save(self, commit=True):
         """Overwrite default method."""
         user = super().save(commit=False)
         user.is_student = True
-        if commit:
-            user.save()
+        user.save()
         return user
