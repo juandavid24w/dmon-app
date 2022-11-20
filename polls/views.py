@@ -1,5 +1,4 @@
 """Polls app views."""
-from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -29,8 +28,6 @@ class CreateQuestionView(TeacherRequiredMixin, CreateView):
 class CreateChoiceView(TeacherRequiredMixin, CreateView):
     """View to create choice."""
 
-    login_url = settings.LOGIN_URL
-    redirect_field_name = "redirect_to"
     model = Choice
     fields = ["choice_text"]
 
