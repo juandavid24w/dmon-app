@@ -5,14 +5,13 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.timezone import now
 from django.views import View, generic
-from django.views.generic.edit import CreateView
 
 # Local imports
 from polls.models import Choice, Question
 from users.mixins import StudentRequiredMixin, TeacherRequiredMixin
 
 
-class CreateQuestionView(TeacherRequiredMixin, CreateView):
+class CreateQuestionView(TeacherRequiredMixin, generic.CreateView):
     """View to create question."""
 
     model = Question
@@ -25,7 +24,7 @@ class CreateQuestionView(TeacherRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class CreateChoiceView(TeacherRequiredMixin, CreateView):
+class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
     """View to create choice."""
 
     model = Choice
