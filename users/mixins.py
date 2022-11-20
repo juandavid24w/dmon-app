@@ -1,39 +1,43 @@
-"""decorators.py."""
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.decorators import user_passes_test
+"""User role Mixins."""
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import redirect
 
 
-def student_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url="login"):
-    """For student user roles.
+class StudentRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    """Student role required mixin."""
 
-    Decorator for views that checks that the logged in user is a student,
-    redirects to the log-in page if necessary.
-    """
-    actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_student,
-        login_url=login_url,
-        redirect_field_name=redirect_field_name,
-    )
+    def test_func(self) -> bool:
+        """Overriding `test_func` to check if the current logged in user is student.
 
-    if function:
-        return actual_decorator(function)
+        Returns:
+        -------
+        bool
+            True, when current user is student.
+            False, otherwise.
 
-    return actual_decorator
+        """
+        return self.request.user.is_student
+
+    def handle_no_permission(self):
+        """Handle no permission error, redirect to some other pages."""
+        return redirect("polls:index")
 
 
-def teacher_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url="login"):
-    """For teacher user roles.
+class TeacherRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    """Teacher role required mixin."""
 
-    A decorator for views that checks that the logged in user is a teacher,
-    redirects to the log-in page if necessary.
-    """
-    actual_decorator = user_passes_test(
-        lambda u: u.is_active and u.is_teacher,
-        login_url=login_url,
-        redirect_field_name=redirect_field_name,
-    )
+    def test_func(self) -> bool:
+        """Overriding `test_func` to check if the current logged in user is teacher.
 
-    if function:
-        return actual_decorator(function)
+        Returns:
+        -------
+        bool
+            True, when current user is student.
+            False, otherwise.
 
-    return actual_decorator
+        """
+        return self.request.user.is_teacher
+
+    def handle_no_permission(self):
+        """Handle no permission error, redirect to some other pages."""
+        return redirect("polls:index")
