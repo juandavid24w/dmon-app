@@ -22,7 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "This_is_a_test_secret_key")
+SECRET_KEY = os.getenv(
+    "SECRET_KEY", "00ec4eb4ec8b871de4c4bf948876f141bd20515cff04d95b4b7378ecc70afe89"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True")
@@ -31,7 +33,6 @@ ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     # third-party apps
     "django_bootstrap5",
     "fontawesomefree",
-    # Add newly defined Django apps here
+    # local apps
     "users.apps.UsersConfig",
     "polls.apps.PollsConfig",
 ]
