@@ -53,8 +53,7 @@ class TeacherSignUpForm(UserCreationForm):
         """Overwrite default method."""
         user = super().save(commit=False)
         user.is_teacher = True
-        if commit:
-            user.save()
+        user.save()
         return user
 
 
@@ -79,6 +78,5 @@ class StudentSignUpForm(UserCreationForm):
         """Overwrite default method."""
         user = super().save(commit=False)
         user.is_student = True
-        if commit:
-            user.save()
+        user.save()
         return user
