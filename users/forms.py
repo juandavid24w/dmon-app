@@ -22,37 +22,3 @@ class CustomUserChangeForm(UserChangeForm):
 
         model = CustomUser
         fields = ("email",)
-
-
-class TeacherSignUpForm(UserCreationForm):
-    """Sign up form for Teachers."""
-
-    class Meta(UserCreationForm.Meta):
-        """Meta class."""
-
-        model = CustomUser
-        fields = ("first_name", "last_name", "email", "password1", "password2")
-
-    def save(self, commit=True):
-        """Overwrite default method."""
-        user = super().save(commit=False)
-        user.is_teacher = True
-        user.save()
-        return user
-
-
-class StudentSignUpForm(UserCreationForm):
-    """Sign up form for Students."""
-
-    class Meta(UserCreationForm.Meta):
-        """Meta class."""
-
-        model = CustomUser
-        fields = ("first_name", "last_name", "email", "password1", "password2")
-
-    def save(self, commit=True):
-        """Overwrite default method."""
-        user = super().save(commit=False)
-        user.is_student = True
-        user.save()
-        return user
