@@ -1,7 +1,7 @@
 {% extends "base_generic.html" %}
 {% load django_bootstrap5 %}
 {% block title %}
-    {{ user_type }} Sign Up
+    {{ title_text }}
 {% endblock title %}
 {% block content %}
     <div class="d-flex justify-content-center">
@@ -11,7 +11,7 @@
                 {% bootstrap_form form %}
                 {{ form.media }}
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-primary">{{ button_text }}</button>
                 </div>
             </form>
         </div>

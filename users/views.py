@@ -11,8 +11,9 @@ class StudentSignUpView(generic.CreateView):
 
     model = CustomUser
     form_class = StudentSignUpForm
+    template_name = "generic_create_update_form.html"
     success_url = reverse_lazy("login")
-    extra_context = {"user_type": "Student"}
+    extra_context = {"title_text": "Student Sign Up", "button_text": "Register"}
 
 
 class TeacherSignUpView(generic.CreateView):
@@ -20,5 +21,6 @@ class TeacherSignUpView(generic.CreateView):
 
     model = CustomUser
     form_class = TeacherSignUpForm
+    template_name = "generic_create_update_form.html"
     success_url = reverse_lazy("login")
-    extra_context = {"user_type": "Teacher"}
+    extra_context = {"title_text": "Teacher Sign Up", "button_text": "Register"}
