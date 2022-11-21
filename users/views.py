@@ -15,7 +15,7 @@ class StudentSignUpView(generic.CreateView):
     success_url = reverse_lazy("login")
     extra_context = {"title_text": "Student Sign Up", "button_text": "Register"}
 
-    def form_valid(self, form):
+    def form_valid(self, form: object) -> object:
         """For valid form submission."""
         form.instance.is_student = True
         return super().form_valid(form)
@@ -30,7 +30,7 @@ class TeacherSignUpView(generic.CreateView):
     success_url = reverse_lazy("login")
     extra_context = {"title_text": "Teacher Sign Up", "button_text": "Register"}
 
-    def form_valid(self, form):
+    def form_valid(self, form: object) -> object:
         """For valid form submission."""
         form.instance.is_teacher = True
         return super().form_valid(form)
