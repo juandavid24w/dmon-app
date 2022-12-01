@@ -30,34 +30,28 @@ python manage.py runserver
 ```
 
 ## Install Cypress
-Keep the Django server running in on CMD or terminal.
 
-Download and install [NodeJS](https://nodejs.org/en/download/) on your computer.
+Download and install [NodeJS v18 LTS](https://nodejs.org/en/download/).
 
-If the installation is successful, you will be able to run `npm` command from the CMD or terminal.
+If the installation is successful, you will be able to run `npm` command from the CMD, bash, or terminal.
 
-Open another CMD prompt or terminal, navigate to the polls app project root directory, and run the command:
+Open another CMD prompt, bash, or terminal, navigate to the project's root directory, and run the command:
 
 ```bash
-npm i cypress --save-dev
+npm install cypress
 ```
 
 This will download the cypress binaries in `node_modules` directory.
 
-It will take several minutes to download and install cypress in the polls app's root directory.
 
-
-## Run the Cypress tests
+## Run Cypress E2E tests
 
 To execute all the cypress tests, run the following command:
 ```bash
-npm run e2e
+npx cypress open
 ```
-This command will open a new window and click on the `test.js` file to start the tests.
+This command will open a browser window. Select the test as `E2E`.
 
+If there are multiple browsers on your machine, it will prompt to you to choose a browser to run Cypress tests.
 
-### (optional)
-The below command executes all the tests in the Linux terminal
-```bash
-./node_modules/.bin/cypress run --headless --browser chrome
-```
+Upon choosing a browser to run Cypress tests, click on the `test.cy.js` file to start the tests.
