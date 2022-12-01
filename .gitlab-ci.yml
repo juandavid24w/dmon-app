@@ -4,11 +4,19 @@ stages:
     - test
     - deploy
 
+## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
+variables:
+    npm_config_cache: '$CI_PROJECT_DIR/.npm'
+    CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+
 cache:
     paths:
         - .cache/pip/
         - venv/
         - staticfiles/
+        - cache/Cypress
+        - node_modules
+        - build
 
 # Defines the job in Static Analysis
 django-lint:
@@ -55,6 +63,17 @@ django-tests:
             coverage_report:
                 coverage_format: cobertura
                 path: coverage.xml
+
+cypress-e2e:
+    image: node:18
+    stage: test
+    before_script:
+        - .gitlab/cypress_before_install.sh
+    script:
+        # start the server in the background
+        - python3 manage.py runserver &
+        # run Cypress tests
+        - npx cypress run --headless
 
 # Deploy polls app to Heroku
 heroku-deploy:

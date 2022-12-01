@@ -23,6 +23,8 @@ staticfiles/
 # C extensions
 *.so
 
+cypress/videos/
+
 # Distribution / packaging
 .Python
 build/
