@@ -2,7 +2,6 @@ stages:
     - lint
     - build
     - test
-    - deploy
 
 ## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
 variables:
@@ -74,13 +73,3 @@ cypress-e2e:
         - python3 manage.py runserver &
         # run Cypress tests
         - npx cypress run --headless
-
-# Deploy polls app to Heroku
-heroku-deploy:
-    stage: deploy
-    image: ruby:latest
-    needs: ['django-tests']
-    before_script:
-        - .gitlab/dpl_before_script.sh
-    script:
-        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
