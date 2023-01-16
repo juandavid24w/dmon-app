@@ -1,6 +1,6 @@
 # Django Polls App
 
-The project is deployed on Heroku: [http://mysite-tutorial.herokuapp.com/accounts/](http://mysite-tutorial.herokuapp.com/accounts/)
+The project is deployed on [Render](https://polls-app-2iql.onrender.com/).
 
 To develop/test this website, clone this repository and follow the instructions:
 

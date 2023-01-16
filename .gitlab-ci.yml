@@ -2,7 +2,6 @@ stages:
     - lint
     - build
     - test
-    - deploy
 
 ## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
 variables:
@@ -20,7 +19,7 @@ cache:
 
 # Defines the job in Static Analysis
 django-lint:
-    image: python:alpine
+    image: python:3.10-alpine
     stage: lint
     before_script:
         - .gitlab/django_before_install.sh
@@ -31,7 +30,7 @@ django-lint:
 # Defines the job in build
 # Checks if migrations files are missing
 django-migrations:
-    image: python:alpine
+    image: python:3.10-alpine
     stage: build
     needs: ['django-lint']
     before_script:
@@ -46,7 +45,7 @@ django-migrations:
 
 # Defines the job in test
 django-tests:
-    image: python:alpine
+    image: python:3.10-alpine
     stage: test
     needs: ['django-migrations', 'django-lint']
     before_script:
@@ -74,13 +73,3 @@ cypress-e2e:
         - python3 manage.py runserver &
         # run Cypress tests
         - npx cypress run --headless
-
-# Deploy polls app to Heroku
-heroku-deploy:
-    stage: deploy
-    image: ruby:latest
-    needs: ['django-tests']
-    before_script:
-        - .gitlab/dpl_before_script.sh
-    script:
-        - dpl --provider=heroku --app=$HEROKU_APP_STAGING --api-key=$HEROKU_API_KEY
