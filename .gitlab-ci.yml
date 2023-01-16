@@ -20,7 +20,7 @@ cache:
 
 # Defines the job in Static Analysis
 django-lint:
-    image: python:3.9-alpine
+    image: python:3.10-alpine
     stage: lint
     before_script:
         - .gitlab/django_before_install.sh
@@ -31,7 +31,7 @@ django-lint:
 # Defines the job in build
 # Checks if migrations files are missing
 django-migrations:
-    image: python:3.9-alpine
+    image: python:3.10-alpine
     stage: build
     needs: ['django-lint']
     before_script:
@@ -46,7 +46,7 @@ django-migrations:
 
 # Defines the job in test
 django-tests:
-    image: python:3.9-alpine
+    image: python:3.10-alpine
     stage: test
     needs: ['django-migrations', 'django-lint']
     before_script:
