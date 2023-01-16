@@ -1,86 +1,32 @@
 [
 {
   "model": "sessions.session",
-  "pk": "c2okm0dktgtmxbxfwo887sdh7qck7w25",
+  "pk": "b7r8zsw8btgkm1la4xhdp41le0lpwnr6",
   "fields": {
-    "session_data": ".eJxVjMsOwiAQRf-FtSE8BhCX7v0GMjATqRpISrsy_rtt0oVuzzn3vkXCdalpHTynicRFgDj9sozlyW0X9MB277L0tsxTlnsiDzvkrRO_rkf7d1Bx1G0dC3ujfUTtHRjnjCfKZw0cbGDKwSoTLRhWPkaFmmzIoCCEDYFGMOLzBbUzNlA:1lMyGh:wk_ZhTj2Rwo6UwUy7CNjCYFxQ1aYniLsojhRCS0xGLk",
-    "expire_date": "2021-04-01T19:25:15.211Z"
+    "session_data": ".eJxVjMsOwiAURP-FtSHyBpfu_QZyLxekaiAp7cr477ZJF5rMas6ZebMI61LjOvIcJ2IXJtjpt0NIz9x2QA9o985Tb8s8Id8VftDBb53y63q4fwcVRt3WFnIq9ozBBTKggwyKfEpCOIGk0RJ6baTxLjtvjQXaUjQ6VZRMGjT7fAHtozgV:1pHWCA:Jf8vEDB_CBr7I3e2ckc7F_Y7CraLjONYsMewsCeU2Fg",
+    "expire_date": "2023-01-30T20:35:06.334Z"
   }
 },
 {
   "model": "sessions.session",
-  "pk": "ylbhdjvhbn3qhnb9wked7xtlun4d8e5e",
+  "pk": "d05qfedgx8ye907n432875c1rbogg5aq",
   "fields": {
-    "session_data": ".eJxVjDsOwjAQBe_iGlnrv01JzxmiXa-NA8iR8qkQd4dIKaB9M_NeYsBtbcO2lHkYWZyFE6ffjTA_St8B37HfJpmnvs4jyV2RB13kdeLyvBzu30HDpX1rHWxFpyxEYK5AEMk6j6kaMBFCVMkTI-viXLImaKtjLtkzqWIIFIj3B8iyNzM:1nBUKE:2l74Ki2XHrsVvjjchvrwYV1jGr9XdUccVBV9w0AvhaM",
-    "expire_date": "2022-02-06T04:17:58.913Z"
+    "session_data": ".eJxVjMsOwiAQRf-FtSFQGMu4dN9vIMNjpGogKe3K-O_apAvd3nPOfQlP21r81vPi5yQuYhCn3y1QfOS6g3Snemsytrouc5C7Ig_a5dRSfl4P9--gUC_fGq3LBgiAGOHsVDA2KqtzQAwOITEYZ8aROWp2ABqt1ZyyDqw0Kh7E-wPNbTdg:1pHW8B:1C429J0npcx0uZ47wWACYAuWgtjhxs2ZBVkehsxOEdw",
+    "expire_date": "2023-01-30T20:30:59.356Z"
   }
 },
 {
   "model": "users.customuser",
   "fields": {
-    "password": "pbkdf2_sha256$216000$8tcjLhsu1WsU$mHz14v50X8RsbQ/GWGY39paICXlDoFsp8oey4AylXZc=",
-    "last_login": "2022-01-23T04:15:32.875Z",
-    "is_superuser": true,
-    "first_name": "",
-    "last_name": "",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2021-03-18T15:03:32.871Z",
-    "email": "seshagiriprabhu@gmail.com",
-    "is_student": false,
-    "is_teacher": false,
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "users.customuser",
-  "fields": {
-    "password": "pbkdf2_sha256$216000$z3xgT7wIXUCU$p6vItrFNBkAYvQ6rzAFWSxuu5ZZspLEHZ3QUgJJEG6E=",
-    "last_login": "2021-03-18T17:56:11.326Z",
-    "is_superuser": false,
-    "first_name": "Seshagiri",
-    "last_name": "Prabhu",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2021-03-18T17:56:03.155Z",
-    "email": "seshagiriprabhu1@gmail.com",
-    "is_student": false,
-    "is_teacher": false,
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "users.customuser",
-  "fields": {
-    "password": "pbkdf2_sha256$216000$wCUVOuNQjmsi$ak+xYNIPqb563QQa0OvG23HG+BgqWKti7F0/LcTTYlU=",
-    "last_login": "2021-03-18T20:00:59.489Z",
-    "is_superuser": false,
-    "first_name": "Student",
-    "last_name": "Blob",
-    "is_staff": false,
-    "is_active": true,
-    "date_joined": "2021-03-18T19:19:20.728Z",
-    "email": "student1@gmail.com",
-    "is_student": true,
-    "is_teacher": false,
-    "groups": [],
-    "user_permissions": []
-  }
-},
-{
-  "model": "users.customuser",
-  "fields": {
-    "password": "pbkdf2_sha256$216000$jIk3ii504y3Z$6ExI14ZrzBxkir35ri+0XqODT5SQ/vrQztQ12SCHPSc=",
-    "last_login": "2021-03-18T19:25:15.204Z",
+    "password": "pbkdf2_sha256$390000$WOMwwnvjEWKzIAR796ccz4$wut3NZvSj8x3rrinn8viM6ffx4p74Z08dnj8iwUT80Y=",
+    "last_login": "2023-01-16T20:25:54.554Z",
     "is_superuser": false,
     "first_name": "teacher",
-    "last_name": "blob",
+    "last_name": "teacher",
     "is_staff": false,
     "is_active": true,
-    "date_joined": "2021-03-18T19:25:15.051Z",
-    "email": "teacher1@gmail.com",
+    "date_joined": "2023-01-16T20:25:46.986Z",
+    "email": "teacher@teacher.com",
     "is_student": false,
     "is_teacher": true,
     "groups": [],
@@ -90,16 +36,16 @@
 {
   "model": "users.customuser",
   "fields": {
-    "password": "pbkdf2_sha256$216000$ngfz6zY0WmjA$4uswkzG2BJsU1iw6Ajjr8QDxgC0+08XG2aVoOTVjtow=",
-    "last_login": "2022-01-23T04:17:58.906Z",
-    "is_superuser": true,
-    "first_name": "",
-    "last_name": "",
-    "is_staff": true,
+    "password": "pbkdf2_sha256$390000$B2yO3FdzGVLMvN40rYtweh$2QRBMukJtmOHEoJU6p3WlJ8ml6PQ6RnpICVcgoT1wFQ=",
+    "last_login": "2023-01-16T20:30:59.350Z",
+    "is_superuser": false,
+    "first_name": "student",
+    "last_name": "student",
+    "is_staff": false,
     "is_active": true,
-    "date_joined": "2022-01-23T04:17:27.003Z",
-    "email": "admin@gmail.com",
-    "is_student": false,
+    "date_joined": "2023-01-16T20:27:57.907Z",
+    "email": "student@student.com",
+    "is_student": true,
     "is_teacher": false,
     "groups": [],
     "user_permissions": []
@@ -109,24 +55,16 @@
   "model": "polls.question",
   "pk": 1,
   "fields": {
-    "question_text": "This is a test question",
-    "pub_date": "2021-03-18T15:04:09Z"
+    "question_text": "How many hours can you spend for CMPS 453 project per week?",
+    "pub_date": "2023-01-16T20:26:26.100Z"
   }
 },
 {
   "model": "polls.question",
   "pk": 2,
   "fields": {
-    "question_text": "This is another test question",
-    "pub_date": "2021-03-18T16:54:58.800Z"
-  }
-},
-{
-  "model": "polls.question",
-  "pk": 4,
-  "fields": {
-    "question_text": "This is a third test question",
-    "pub_date": "2021-03-18T20:10:14.376Z"
+    "question_text": "What is Git?",
+    "pub_date": "2023-01-16T20:35:13.310Z"
   }
 },
 {
@@ -134,8 +72,8 @@
   "pk": 1,
   "fields": {
     "question": 1,
-    "choice_text": "Option 1",
-    "votes": 3
+    "choice_text": "4 hours",
+    "votes": 0
   }
 },
 {
@@ -143,8 +81,8 @@
   "pk": 2,
   "fields": {
     "question": 1,
-    "choice_text": "Option 2",
-    "votes": 0
+    "choice_text": "6 hours",
+    "votes": 1
   }
 },
 {
@@ -152,7 +90,7 @@
   "pk": 3,
   "fields": {
     "question": 1,
-    "choice_text": "Option 3",
+    "choice_text": "8 hours",
     "votes": 0
   }
 },
@@ -160,26 +98,26 @@
   "model": "polls.choice",
   "pk": 4,
   "fields": {
-    "question": 2,
-    "choice_text": "add",
-    "votes": 1
+    "question": 1,
+    "choice_text": "2 hours",
+    "votes": 0
   }
 },
 {
   "model": "polls.choice",
   "pk": 5,
   "fields": {
-    "question": 2,
-    "choice_text": "test 2",
-    "votes": 0
+    "question": 1,
+    "choice_text": "10 hours",
+    "votes": 1
   }
 },
 {
   "model": "polls.choice",
   "pk": 6,
   "fields": {
-    "question": 2,
-    "choice_text": "test21e",
+    "question": 1,
+    "choice_text": "> 10 hours",
     "votes": 0
   }
 },
@@ -188,8 +126,8 @@
   "pk": 7,
   "fields": {
     "question": 2,
-    "choice_text": "test21e",
-    "votes": 1
+    "choice_text": "Version Control System",
+    "votes": 0
   }
 },
 {
@@ -197,7 +135,7 @@
   "pk": 8,
   "fields": {
     "question": 2,
-    "choice_text": "test21e",
+    "choice_text": "Revision control system",
     "votes": 0
   }
 },
@@ -206,125 +144,17 @@
   "pk": 9,
   "fields": {
     "question": 2,
-    "choice_text": "test 123123123",
-    "votes": 3
+    "choice_text": "Operating system",
+    "votes": 0
   }
 },
 {
   "model": "polls.choice",
   "pk": 10,
   "fields": {
-    "question": 4,
-    "choice_text": "Choice 1",
+    "question": 2,
+    "choice_text": "Mobile application",
     "votes": 0
-  }
-},
-{
-  "model": "polls.choice",
-  "pk": 11,
-  "fields": {
-    "question": 4,
-    "choice_text": "Choice 2",
-    "votes": 0
-  }
-},
-{
-  "model": "polls.choice",
-  "pk": 12,
-  "fields": {
-    "question": 4,
-    "choice_text": "Choice 3",
-    "votes": 0
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 1,
-  "fields": {
-    "action_time": "2021-03-18T15:04:11.126Z",
-    "user": [
-      "seshagiriprabhu@gmail.com"
-    ],
-    "content_type": [
-      "polls",
-      "question"
-    ],
-    "object_id": "1",
-    "object_repr": "This is a test question",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 2,
-  "fields": {
-    "action_time": "2021-03-18T15:04:23.593Z",
-    "user": [
-      "seshagiriprabhu@gmail.com"
-    ],
-    "content_type": [
-      "polls",
-      "choice"
-    ],
-    "object_id": "1",
-    "object_repr": "Option 1",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 3,
-  "fields": {
-    "action_time": "2021-03-18T15:04:35.314Z",
-    "user": [
-      "seshagiriprabhu@gmail.com"
-    ],
-    "content_type": [
-      "polls",
-      "choice"
-    ],
-    "object_id": "2",
-    "object_repr": "Option 2",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 4,
-  "fields": {
-    "action_time": "2021-03-18T15:04:42.954Z",
-    "user": [
-      "seshagiriprabhu@gmail.com"
-    ],
-    "content_type": [
-      "polls",
-      "choice"
-    ],
-    "object_id": "3",
-    "object_repr": "Option 3",
-    "action_flag": 1,
-    "change_message": "[{\"added\": {}}]"
-  }
-},
-{
-  "model": "admin.logentry",
-  "pk": 5,
-  "fields": {
-    "action_time": "2021-03-18T17:16:51.630Z",
-    "user": [
-      "seshagiriprabhu@gmail.com"
-    ],
-    "content_type": [
-      "polls",
-      "question"
-    ],
-    "object_id": "3",
-    "object_repr": "This is another test question",
-    "action_flag": 3,
-    "change_message": ""
   }
 }
 ]
