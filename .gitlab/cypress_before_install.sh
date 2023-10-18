@@ -6,5 +6,7 @@ apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 
 pip3 install -q virtualenv
 pip3 install --upgrade -q pip
 pip3 install --no-cache-dir -qr requirements.txt
-python3 manage.py migrate >/dev/null
+python3 manage.py makemigrations
+python3 manage.py migrate
+python manage.py migrate --run-syncdb
 python3 manage.py collectstatic --no-input >/dev/null
