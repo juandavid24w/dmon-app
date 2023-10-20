@@ -3,6 +3,13 @@
     Question: {{ question.question_text }}
 {% endblock title %}
 {% block content %}
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-5"></div>
+        <div class="col-md-2 centered">
+            <h5 class="centered">Author: {{ question.author.first_name }}</h5>
+        </div>
+        <div class="col-md-5"></div>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
             {% if error_message %}<div class="alert alert-danger" role="alert">{{ error_message }}</div>{% endif %}
@@ -14,7 +21,7 @@
                             <input type="radio"
                                    name="choice"
                                    id="choice{{ forloop.counter }}"
-                                   value="{{ choice.id }}"/>
+                                   value="{{ choice.id }}" />
                         </div>
                         <div class="col-md-5 mb-1">
                             <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
