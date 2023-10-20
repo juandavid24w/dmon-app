@@ -22,7 +22,7 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
     slug_field = None
     slug_url_kwarg = ""
 
-    def get_object(self, queryset=None):
+    def get_object(self, queryset: list = None):
         """Owner of the object should be the current user."""
         return self.model.objects.filter(custom_user=self.request.user).first()
 
@@ -35,11 +35,11 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "user_profile/profile_update.html"
     success_url = reverse_lazy("user_profile:profile_detail")
 
-    def get_object(self, queryset=None):
+    def get_object(self, queryset: list = None):
         """Owner of the object should be the current user."""
         return self.model.objects.filter(custom_user=self.request.user).first()
 
-    def form_valid(self, form):
+    def form_valid(self, form: object):
         """Set custom_user Field of the current object as the current user."""
         profile = form.save(commit=False)
         profile.custom_user = self.request.user
