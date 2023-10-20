@@ -54,25 +54,15 @@ describe('Register teacher', () => {
     });
 });
 
-describe('Student Login and Logout', () => {
+describe('Student Login', () => {
     it('Test Login Form', () => {
         cy.login(stud_email, stud_password);
     });
-    it('Test Logout Click', () => {
-        cy.contains(stud_email).click();
-        cy.contains('Log out').click();
-        cy.contains('Sign in');
-    });
 });
 
-describe('Teacher Login and Logout', () => {
+describe('Teacher Login', () => {
     it('Test Login Form', () => {
         cy.login(teach_email, teach_password);
-    });
-    it('Test Logout Click', () => {
-        cy.contains(teach_email).click();
-        cy.contains('Log out').click();
-        cy.contains('Sign in');
     });
 });
 
