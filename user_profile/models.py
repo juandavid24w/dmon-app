@@ -1,5 +1,9 @@
 """User profile model."""
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+from users.models import CustomUser
 
 
 class UserProfile(models.Model):
@@ -10,10 +14,19 @@ class UserProfile(models.Model):
 
         FEMALE = 1
         MALE = 2
-        OTHERS = 3
+        OTHER = 3
 
     custom_user = models.OneToOneField("users.CustomUser", on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, default="")
-    gender = models.IntegerField(choices=Gender.choices, default=Gender.OTHERS)
-    age = models.IntegerField(default=69)
+    gender = models.IntegerField(choices=Gender.choices, default=Gender.FEMALE)
+    age = models.IntegerField(default=1)
     picture = models.ImageField(upload_to="profile_pictures/", blank=True)
+
+
+@receiver(post_save, sender=CustomUser)
+def create_profile(sender, instance, created, **kwargs):
+    """Create an object of UserProfile when a user CustomUser object is created."""
+    if created:
+        UserProfile.objects.create(custom_user=instance)
+
+
+post_save.connect(create_profile, sender=CustomUser)
