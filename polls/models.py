@@ -10,6 +10,10 @@ class Question(models.Model):
 
     Attributes:
     ----------
+    author : ForeignKey
+        Holds the author of the question.
+    answered_by : ManyToManyField
+        Holds the users who have answered the question.
     question_text : string
         Holds the text for the question.
     pub_date : datetime
@@ -17,6 +21,8 @@ class Question(models.Model):
 
     """
 
+    author = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE, null=True, blank=True)
+    answered_by = models.ManyToManyField("users.CustomUser", related_name="question_users")
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
 
@@ -42,6 +48,8 @@ class Choice(models.Model):
 
     Attributes:
     ----------
+    answered_choice : ManyToManyField
+        Holds the users who have answered the question with the choice.
     question : foreign key
         Holds a reference to the Question class object.
     choice_text : string
@@ -49,6 +57,7 @@ class Choice(models.Model):
 
     """
 
+    answered_choice = models.ManyToManyField("users.CustomUser", related_name="choice_users")
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)

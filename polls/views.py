@@ -18,9 +18,15 @@ class CreateQuestionView(TeacherRequiredMixin, generic.CreateView):
     fields = ["question_text"]
     success_url = reverse_lazy("polls:index")
 
-    def form_valid(self, form):
-        """For valid form submission."""
+    def form_valid(self, form: object) -> object:
+        """For valid form submission.
+
+        - Set the published date as the current date and time.
+        - Set the author as the current logged in user.
+
+        """
         form.instance.pub_date = now()
+        form.instance.author = self.request.user
         return super().form_valid(form)
 
 
@@ -30,12 +36,12 @@ class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
     model = Choice
     fields = ["choice_text"]
 
-    def get_success_url(self):
+    def get_success_url(self) -> object:
         """Overwrite the `success_url`."""
         question_id = self.kwargs["pk"]
         return reverse_lazy("polls:detail", kwargs={"pk": question_id})
 
-    def form_valid(self, form):
+    def form_valid(self, form: object) -> object:
         """If the form data is valid, add current time as `pub_date`."""
         form.instance.question_id = self.kwargs["pk"]
         return super().form_valid(form)
@@ -46,7 +52,7 @@ class IndexView(generic.ListView):
 
     model = Question
 
-    def get_queryset(self):
+    def get_queryset(self) -> list:
         """Return the last five published questions."""
         return Question.objects.order_by("-pub_date")[:5]
 
@@ -67,13 +73,21 @@ class ResultsView(LoginRequiredMixin, generic.DetailView):
 class SubmitVote(StudentRequiredMixin, View):
     """Vote View."""
 
-    def post(self, request, question_id):
-        """Vote counter function."""
+    def post(self, request: object, question_id: int) -> object:
+        """Vote counter function.
+
+        - Set the `answered_by` for the `question` and `choice` objects as the current user.
+        - Increment the `votes` for the `choice` by one.
+
+        """
         question = get_object_or_404(Question, pk=question_id)
         try:
+            question.answered_by.add(self.request.user)
             selected_choice = question.choice_set.get(pk=request.POST["choice"])
+            selected_choice.answered_choice.add(self.request.user)
             selected_choice.votes += 1
             selected_choice.save()
+            question.save()
         except (KeyError, Choice.DoesNotExist):
             return render(
                 request,
