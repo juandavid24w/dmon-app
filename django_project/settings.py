@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # local apps
     "users.apps.UsersConfig",
     "polls.apps.PollsConfig",
+    "user_profile.apps.UserProfileConfig",
 ]
 
 MIDDLEWARE = [
@@ -127,6 +128,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Media files: User uploaded files.
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
