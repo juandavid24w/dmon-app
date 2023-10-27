@@ -51,10 +51,7 @@ class IndexView(generic.ListView):
     """Index view of polls app."""
 
     model = Question
-
-    def get_queryset(self) -> list:
-        """Return the last five published questions."""
-        return Question.objects.order_by("-pub_date")[:5]
+    queryset = Question.objects.order_by("-pub_date")[:5]
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
