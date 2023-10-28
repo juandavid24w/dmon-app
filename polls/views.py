@@ -16,7 +16,9 @@ class CreateQuestionView(TeacherRequiredMixin, generic.CreateView):
 
     model = Question
     fields = ["question_text"]
-    success_url = reverse_lazy("polls:index")
+    success_url = reverse_lazy("polls:question-list")
+    template_name = "generic_create_update_form.html"
+    extra_context = {"title_text": "Add Question", "button_text": "Add"}
 
     def form_valid(self, form: object) -> object:
         """For valid form submission.
@@ -30,11 +32,45 @@ class CreateQuestionView(TeacherRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
+class UpdateQuestionView(TeacherRequiredMixin, generic.UpdateView):
+    """View to update question."""
+
+    model = Question
+    fields = ["question_text"]
+    success_url = reverse_lazy("polls:question-list")
+    template_name = "generic_create_update_form.html"
+    extra_context = {"title_text": "Edit Question", "button_text": "Update"}
+
+
+class DeleteQuestionView(TeacherRequiredMixin, generic.DeleteView):
+    """View to delete question."""
+
+    model = Question
+    success_url = reverse_lazy("polls:question-list")
+    template_name = "generic_delete_confirm_form.html"
+    extra_context = {"title_text": "Delete Question"}
+
+
+class QuestionListView(generic.ListView):
+    """Question List view of polls app."""
+
+    model = Question
+    queryset = Question.objects.order_by("-pub_date")[:5]
+
+
+class QuestionDetailView(LoginRequiredMixin, generic.DetailView):
+    """Detail view of polls app."""
+
+    model = Question
+
+
 class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
     """View to create choice."""
 
     model = Choice
     fields = ["choice_text"]
+    template_name = "generic_create_update_form.html"
+    extra_context = {"title_text": "Add Choice", "button_text": "Add"}
 
     def get_success_url(self) -> object:
         """Overwrite the `success_url`."""
@@ -45,19 +81,6 @@ class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
         """If the form data is valid, add current time as `pub_date`."""
         form.instance.question_id = self.kwargs["pk"]
         return super().form_valid(form)
-
-
-class IndexView(generic.ListView):
-    """Index view of polls app."""
-
-    model = Question
-    queryset = Question.objects.order_by("-pub_date")[:5]
-
-
-class DetailView(LoginRequiredMixin, generic.DetailView):
-    """Detail view of polls app."""
-
-    model = Question
 
 
 class ResultsView(LoginRequiredMixin, generic.DetailView):

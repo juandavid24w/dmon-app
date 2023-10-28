@@ -9,7 +9,7 @@
                 <ol>
                     {% for question in object_list %}
                         <li>
-                            <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                            <a href="{% url 'polls:question-detail' question.id %}">{{ question.question_text }}</a>
                         </li>
                     {% endfor %}
                 </ol>

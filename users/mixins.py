@@ -20,7 +20,7 @@ class StudentRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
-        return redirect("polls:index")
+        return redirect("polls:question-list")
 
 
 class TeacherRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -40,4 +40,4 @@ class TeacherRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
-        return redirect("polls:index")
+        return redirect("polls:question-list")
