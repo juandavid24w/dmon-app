@@ -65,7 +65,7 @@ class QuestionIndexViewTests(TestCase):
 
     def test_no_questions(self):
         """Test No question text displayed when no object in Model."""
-        response = self.client.get(reverse("polls:index"))
+        response = self.client.get(reverse("polls:question-list"))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No polls are available.")
         self.assertQuerysetEqual(response.context["object_list"], [])

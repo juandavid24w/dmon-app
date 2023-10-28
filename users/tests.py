@@ -69,7 +69,7 @@ class LoginTestCase(TestCase):
         response = self.client.post(self.login_url, data=self.login_params)
         # redirects after a successful login
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        response = self.client.get(reverse("polls:index"))
+        response = self.client.get(reverse("polls:question-list"))
         self.assertEqual(str(response.context.get("user")), "jdoe@gmail.com")
 
     def test_logged_in_user_sees_correct_template(self):
@@ -106,12 +106,12 @@ class LoginTestCase(TestCase):
         response = self.client.post(self.login_url, data=self.login_params)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
-        response = self.client.get(reverse("polls:index"))
+        response = self.client.get(reverse("polls:question-list"))
         self.assertEqual(str(response.context.get("user")), "jdoe@gmail.com")
 
         response = self.client.get(self.logout_url)
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
 
-        response = self.client.get(reverse("polls:index"))
+        response = self.client.get(reverse("polls:question-list"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(str(response.context.get("user")), "AnonymousUser")
