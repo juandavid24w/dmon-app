@@ -51,6 +51,19 @@ class DeleteQuestionView(TeacherRequiredMixin, generic.DeleteView):
     extra_context = {"title_text": "Delete Question"}
 
 
+class QuestionListView(generic.ListView):
+    """Question List view of polls app."""
+
+    model = Question
+    queryset = Question.objects.order_by("-pub_date")[:5]
+
+
+class QuestionDetailView(LoginRequiredMixin, generic.DetailView):
+    """Detail view of polls app."""
+
+    model = Question
+
+
 class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
     """View to create choice."""
 
@@ -68,19 +81,6 @@ class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
         """If the form data is valid, add current time as `pub_date`."""
         form.instance.question_id = self.kwargs["pk"]
         return super().form_valid(form)
-
-
-class QuestionListView(generic.ListView):
-    """Question List view of polls app."""
-
-    model = Question
-    queryset = Question.objects.order_by("-pub_date")[:5]
-
-
-class QuestionDetailView(LoginRequiredMixin, generic.DetailView):
-    """Detail view of polls app."""
-
-    model = Question
 
 
 class ResultsView(LoginRequiredMixin, generic.DetailView):
