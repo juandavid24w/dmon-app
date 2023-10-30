@@ -36,7 +36,7 @@ class UpdateQuestionView(TeacherRequiredMixin, generic.UpdateView):
     """View to update question."""
 
     model = Question
-    fields = ["question_text"]
+    fields = ["question_text", "pub_date"]
     success_url = reverse_lazy("polls:question-list")
     template_name = "generic_create_update_form.html"
     extra_context = {"title_text": "Edit Question", "button_text": "Update"}
