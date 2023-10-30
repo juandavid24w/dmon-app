@@ -3,12 +3,43 @@
     Question: {{ question.question_text }}
 {% endblock title %}
 {% block content %}
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-5"></div>
-        <div class="col-md-2 centered">
-            <h5 class="centered">Author: {{ question.author.first_name }}</h5>
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <div class="text-center">
+                {% if user.is_authenticated and user.is_teacher %}
+                    <a class="btn btn-primary"
+                       href="{% url 'polls:update-question' question.id %}">
+                        <i class="fa-solid fa-edit"></i> Edit
+                    </a>
+                    <a class="btn btn-danger"
+                       href="{% url 'polls:delete-question' question.id %}">
+                        <i class="fa-solid fa-trash"></i> Delete
+                    </a>
+                {% endif %}
+                {% if user.is_authenticated and user.is_student %}
+                    <a class="btn btn-primary disabled"
+                       href="{% url 'polls:update-question' question.id %}"
+                       role="button"
+                       aria-disabled="true">
+                        <i class="fa-solid fa-edit"></i> Edit
+                    </a>
+                    <a class="btn btn-danger  disabled"
+                       href="{% url 'polls:delete-question' question.id %}"
+                       role="button"
+                       aria-disabled="true">
+                        <i class="fa-solid fa-trash"></i> Delete Question
+                    </a>
+                {% endif %}
+            </div>
         </div>
-        <div class="col-md-5"></div>
+    </div>
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 centered">
+            <p class="centered text-secondary">Author: {{ question.author.get_full_name }}</p>
+            <p class="centered text-secondary">Date published: {{ question.pub_date }}</p>
+        </div>
+        <div class="col-md-4"></div>
     </div>
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -49,10 +80,6 @@
                     <a class="btn btn-warning" href="{% url 'polls:results' question.id %}">
                         <i class="fa-solid fa-poll"></i> View Polling Result
                     </a>
-                    <a class="btn btn-danger"
-                       href="{% url 'polls:delete-question' question.id %}">
-                        <i class="fa-solid fa-trash"></i> Delete Question
-                    </a>
                 {% endif %}
                 {% if user.is_authenticated and user.is_student %}
                     <a class="btn btn-warning disabled"
@@ -66,12 +93,6 @@
                        role="button"
                        aria-disabled="true">
                         <i class="fa-solid fa-poll"></i> View Polling Result
-                    </a>
-                    <a class="btn btn-danger  disabled"
-                       href="{% url 'polls:delete-question' question.id %}"
-                       role="button"
-                       aria-disabled="true">
-                        <i class="fa-solid fa-trash"></i> Delete Question
                     </a>
                 {% endif %}
             </div>
