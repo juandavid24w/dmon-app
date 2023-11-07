@@ -11,7 +11,7 @@ urlpatterns = [
     path("", views.QuestionListView.as_view(), name="question-list"),
     path("<int:pk>/", views.QuestionDetailView.as_view(), name="question-detail"),
     path("<int:pk>/edit/", views.UpdateQuestionView.as_view(), name="update-question"),
-    path("<int:pk>/delete", views.DeleteQuestionView.as_view(), name="delete-question"),
+    path("<int:pk>/delete/", views.DeleteQuestionView.as_view(), name="delete-question"),
     path("<int:pk>/results/", views.ResultsView.as_view(), name="results"),
     path("<int:question_id>/vote/", views.SubmitVote.as_view(), name="vote"),
 ]
