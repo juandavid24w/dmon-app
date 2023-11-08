@@ -26,7 +26,7 @@
                        href="{% url 'polls:delete-question' question.id %}"
                        role="button"
                        aria-disabled="true">
-                        <i class="fa-solid fa-trash"></i> Delete Question
+                        <i class="fa-solid fa-trash"></i> Delete
                     </a>
                 {% endif %}
             </div>
@@ -35,7 +35,14 @@
     <div class="row justify-content-center mb-5">
         <div class="col-md-4"></div>
         <div class="col-md-4 centered">
-            <p class="centered text-secondary">Author: {{ question.author.get_full_name }}</p>
+            <p class="centered text-secondary">
+                Author: {{ question.author.get_full_name }}
+                {% if question.author == user %}
+                    (You)
+                {% else %}
+                    (Not You)
+                {% endif %}
+            </p>
             <p class="centered text-secondary">Date published: {{ question.pub_date }}</p>
         </div>
         <div class="col-md-4"></div>
