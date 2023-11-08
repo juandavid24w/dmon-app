@@ -8,10 +8,10 @@ from django.views import View, generic
 
 # Local imports
 from polls.models import Choice, Question
-from users.mixins import StudentRequiredMixin, TeacherRequiredMixin
+from user_profile import mixins
 
 
-class CreateQuestionView(TeacherRequiredMixin, generic.CreateView):
+class CreateQuestionView(mixins.TeacherRequiredMixin, generic.CreateView):
     """View to create question."""
 
     model = Question
@@ -32,7 +32,7 @@ class CreateQuestionView(TeacherRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class UpdateQuestionView(TeacherRequiredMixin, generic.UpdateView):
+class UpdateQuestionView(mixins.TeacherAuthorRequiredMixin, generic.UpdateView):
     """View to update question."""
 
     model = Question
@@ -42,7 +42,7 @@ class UpdateQuestionView(TeacherRequiredMixin, generic.UpdateView):
     extra_context = {"title_text": "Edit Question", "button_text": "Update"}
 
 
-class DeleteQuestionView(TeacherRequiredMixin, generic.DeleteView):
+class DeleteQuestionView(mixins.TeacherAuthorRequiredMixin, generic.DeleteView):
     """View to delete question."""
 
     model = Question
@@ -64,7 +64,7 @@ class QuestionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Question
 
 
-class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
+class CreateChoiceView(mixins.TeacherRequiredMixin, generic.CreateView):
     """View to create choice."""
 
     model = Choice
@@ -75,7 +75,7 @@ class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
     def get_success_url(self) -> object:
         """Overwrite the `success_url`."""
         question_id = self.kwargs["pk"]
-        return reverse_lazy("polls:detail", kwargs={"pk": question_id})
+        return reverse_lazy("polls:question-detail", kwargs={"pk": question_id})
 
     def form_valid(self, form: object) -> object:
         """If the form data is valid, add current time as `pub_date`."""
@@ -90,7 +90,7 @@ class ResultsView(LoginRequiredMixin, generic.DetailView):
     template_name = "polls/results.html"
 
 
-class SubmitVote(StudentRequiredMixin, View):
+class SubmitVote(mixins.StudentRequiredMixin, View):
     """Vote View."""
 
     def post(self, request: object, question_id: int) -> object:
@@ -109,12 +109,9 @@ class SubmitVote(StudentRequiredMixin, View):
             selected_choice.save()
             question.save()
         except (KeyError, Choice.DoesNotExist):
-            return render(
-                request,
-                "polls/details.html",
-                {
-                    "question": question,
-                    "error_message": "You didn't select a choice.",
-                },
-            )
+            context = {
+                "question": question,
+                "error_message": "You didn't select a choice.",
+            }
+            return render(request, "polls/details.html", context)
         return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))

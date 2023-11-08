@@ -15,15 +15,14 @@
                        href="{% url 'polls:delete-question' question.id %}">
                         <i class="fa-solid fa-trash"></i> Delete
                     </a>
-                {% endif %}
-                {% if user.is_authenticated %}
+                {% else %}
                     <a class="btn btn-primary disabled"
                        href="{% url 'polls:update-question' question.id %}"
                        role="button"
                        aria-disabled="true">
                         <i class="fa-solid fa-edit"></i> Edit
                     </a>
-                    <a class="btn btn-danger  disabled"
+                    <a class="btn btn-danger disabled"
                        href="{% url 'polls:delete-question' question.id %}"
                        role="button"
                        aria-disabled="true">
@@ -72,13 +71,10 @@
     <div class="row justify-content-center mb-4">
         <div class="col-md-6">
             <div class="text-center">
-                {% if user.is_authenticated and user.userprofile.is_teacher %}
+                {% if user.is_authenticated and user.userprofile.is_teacher and question.author == user %}
                     <a class="btn btn-warning"
                        href="{% url 'polls:create-choice' question.id %}">
                         <i class="fa-solid fa-plus"></i> Add choice
-                    </a>
-                    <a class="btn btn-warning" href="{% url 'polls:results' question.id %}">
-                        <i class="fa-solid fa-poll"></i> View Polling Result
                     </a>
                 {% else %}
                     <a class="btn btn-warning disabled"
@@ -87,6 +83,12 @@
                        aria-disabled="true">
                         <i class="fa-solid fa-plus"></i> Add choice
                     </a>
+                {% endif %}
+                {% if user.is_authenticated and user.userprofile.is_teacher %}
+                    <a class="btn btn-warning" href="{% url 'polls:results' question.id %}">
+                        <i class="fa-solid fa-poll"></i> View Polling Result
+                    </a>
+                {% else %}
                     <a class="btn btn-warning disabled"
                        href="{% url 'polls:results' question.id %}"
                        role="button"
