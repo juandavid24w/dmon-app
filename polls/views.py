@@ -52,14 +52,22 @@ class DeleteQuestionView(polls_mixins.TeacherAuthorRequiredMixin, generic.Delete
 
 
 class QuestionListView(generic.ListView):
-    """Question List view of polls app."""
+    """Question List view of polls app.
+
+    Default `template_name` if not specified is "polls/question_list.html"
+
+    """
 
     model = Question
     queryset = Question.objects.order_by("-pub_date")[:5]
 
 
 class QuestionDetailView(LoginRequiredMixin, generic.DetailView):
-    """Detail view of polls app."""
+    """Detail view of polls app.
+
+    Default `template_name` if not specified is "polls/question_detail.html"
+
+    """
 
     model = Question
 
@@ -73,12 +81,22 @@ class CreateChoiceView(user_profile_mixins.TeacherRequiredMixin, generic.CreateV
     extra_context = {"title_text": "Add Choice", "button_text": "Add"}
 
     def get_success_url(self) -> object:
-        """Overwrite the `success_url`."""
+        """Overwrite the `success_url` to generate a dynamic URL.
+
+        - Get the `pk` from the URLs to get the `question_id`.
+        - Redirect to the question detail view of the question to which choice being added.
+
+        """
         question_id = self.kwargs["pk"]
         return reverse_lazy("polls:question-detail", kwargs={"pk": question_id})
 
     def form_valid(self, form: object) -> object:
-        """If the form data is valid, add current time as `pub_date`."""
+        """If the form data is valid, add current time as `pub_date`.
+
+        - Set the `question` field (ForeignKey) of `Choice` model.
+        - Get the `pk` from the URLs to get the `question_id`.
+
+        """
         form.instance.question_id = self.kwargs["pk"]
         return super().form_valid(form)
 
