@@ -21,7 +21,8 @@ class StudentRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
-        return redirect("polls:question-list")
+        redirect_url = reverse_lazy("polls:question-list")
+        return redirect(redirect_url)
 
 
 class TeacherRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -41,19 +42,5 @@ class TeacherRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
-        return redirect("polls:question-list")
-
-
-class TeacherAuthorRequiredMixin(TeacherRequiredMixin, UserPassesTestMixin):
-    """Teacher role and author of object required mixin."""
-
-    def dispatch(self, request, *args, **kwargs):
-        """Redirect if the object is not owned by the current user."""
-        obj = self.get_object()
-
-        if obj.author != self.request.user:
-            return redirect(
-                reverse_lazy("polls:question-detail", kwargs={"pk": obj.id})
-            )
-
-        return super().dispatch(request, *args, **kwargs)
+        redirect_url = reverse_lazy("polls:question-list")
+        return redirect(redirect_url)

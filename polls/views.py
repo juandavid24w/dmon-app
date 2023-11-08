@@ -6,12 +6,12 @@ from django.urls import reverse, reverse_lazy
 from django.utils.timezone import now
 from django.views import View, generic
 
-# Local imports
+from polls import mixins as polls_mixins
 from polls.models import Choice, Question
-from user_profile import mixins
+from user_profile import mixins as user_profile_mixins
 
 
-class CreateQuestionView(mixins.TeacherRequiredMixin, generic.CreateView):
+class CreateQuestionView(user_profile_mixins.TeacherRequiredMixin, generic.CreateView):
     """View to create question."""
 
     model = Question
@@ -32,7 +32,7 @@ class CreateQuestionView(mixins.TeacherRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class UpdateQuestionView(mixins.TeacherAuthorRequiredMixin, generic.UpdateView):
+class UpdateQuestionView(polls_mixins.TeacherAuthorRequiredMixin, generic.UpdateView):
     """View to update question."""
 
     model = Question
@@ -42,7 +42,7 @@ class UpdateQuestionView(mixins.TeacherAuthorRequiredMixin, generic.UpdateView):
     extra_context = {"title_text": "Edit Question", "button_text": "Update"}
 
 
-class DeleteQuestionView(mixins.TeacherAuthorRequiredMixin, generic.DeleteView):
+class DeleteQuestionView(polls_mixins.TeacherAuthorRequiredMixin, generic.DeleteView):
     """View to delete question."""
 
     model = Question
@@ -64,7 +64,7 @@ class QuestionDetailView(LoginRequiredMixin, generic.DetailView):
     model = Question
 
 
-class CreateChoiceView(mixins.TeacherRequiredMixin, generic.CreateView):
+class CreateChoiceView(user_profile_mixins.TeacherRequiredMixin, generic.CreateView):
     """View to create choice."""
 
     model = Choice
@@ -90,7 +90,7 @@ class ResultsView(LoginRequiredMixin, generic.DetailView):
     template_name = "polls/results.html"
 
 
-class SubmitVote(mixins.StudentRequiredMixin, View):
+class SubmitVote(user_profile_mixins.StudentRequiredMixin, View):
     """Vote View."""
 
     def post(self, request: object, question_id: int) -> object:
