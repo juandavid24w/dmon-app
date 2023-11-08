@@ -55,17 +55,27 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form: object):
-        """Set custom_user Field of the current object as the current user."""
-        profile = form.save(commit=False)
-        profile.custom_user = self.request.user
-        user = self.request.user
-        user.last_name = form.cleaned_data["last_name"]
-        user.first_name = form.cleaned_data["first_name"]
+        """Set custom_user Field of the current object as the current user.
+
+        - Update the `first_name` and `last_name` fields of the `CustomUser` model.
+        - Set the `custom_user` (ForeignKey) field of `UserProfile` object of current user.
+        - Update `is_student` and `is_teacher`: they are mutually exclusive.
+        - Save the changes made to objects of `user_profile` and `custom_user` objects to the DB.
+
+        """
+        user_profile = form.save(commit=False)
+        custom_user = self.request.user
+        user_profile.custom_user = custom_user
+
+        custom_user.first_name = form.cleaned_data["first_name"]
+        custom_user.last_name = form.cleaned_data["last_name"]
         account_type = int(form.cleaned_data["account_type"])
+
         if account_type == 1:
-            profile.is_student, profile.is_teacher = True, False
+            user_profile.is_student, user_profile.is_teacher = True, False
         else:
-            profile.is_student, profile.is_teacher = False, True
-        profile.save()
-        user.save()
+            user_profile.is_student, user_profile.is_teacher = False, True
+
+        user_profile.save()
+        custom_user.save()
         return super().form_valid(form)
