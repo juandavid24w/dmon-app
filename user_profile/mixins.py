@@ -49,13 +49,11 @@ class TeacherAuthorRequiredMixin(TeacherRequiredMixin, UserPassesTestMixin):
 
     def dispatch(self, request, *args, **kwargs):
         """Redirect if the object is not owned by the current user."""
-        object = self.get_object()
+        obj = self.get_object()
 
-        if object.author != self.request.user:
+        if obj.author != self.request.user:
             return redirect(
-                reverse_lazy("polls:question-detail", kwargs={"pk": object.id})
+                reverse_lazy("polls:question-detail", kwargs={"pk": obj.id})
             )
 
-        return super(TeacherAuthorRequiredMixin, self).dispatch(
-            request, *args, **kwargs
-        )
+        return super().dispatch(request, *args, **kwargs)
