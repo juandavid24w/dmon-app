@@ -18,7 +18,7 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
     """
 
     model = UserProfile
-    template_name = "user_profile/profile.html"
+    template_name = "user_profile/userprofile_detail.html"
     slug_field = None
     slug_url_kwarg = ""
 
@@ -32,7 +32,7 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     model = UserProfile
     form_class = UserProfileUpdateForm
-    template_name = "user_profile/profile_update.html"
+    template_name = "user_profile/userprofile_update.html"
     success_url = reverse_lazy("user_profile:profile_detail")
 
     def get_object(self, queryset: list = None):
@@ -42,11 +42,13 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         """Set the current value of first_name and last_name in the form from the current user."""
         context = super().get_context_data(**kwargs)
+        account_type = 1 if self.request.user.userprofile.is_student else 2
         context["form"] = UserProfileUpdateForm(
             instance=self.request.user.userprofile,
             initial={
                 "first_name": self.request.user.first_name,
                 "last_name": self.request.user.last_name,
+                "account_type": account_type,
             },
         )
         return context
@@ -58,6 +60,11 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
         user = self.request.user
         user.last_name = form.cleaned_data["last_name"]
         user.first_name = form.cleaned_data["first_name"]
+        account_type = int(form.cleaned_data["account_type"])
+        if account_type == 1:
+            profile.is_student, profile.is_teacher = True, False
+        else:
+            profile.is_student, profile.is_teacher = False, True
         profile.save()
         user.save()
         return super().form_valid(form)

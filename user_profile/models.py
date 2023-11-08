@@ -20,11 +20,13 @@ class UserProfile(models.Model):
     gender = models.IntegerField(choices=Gender.choices, default=Gender.FEMALE)
     age = models.IntegerField(default=1)
     picture = models.ImageField(upload_to="profile_pictures/", blank=True)
+    is_student = models.BooleanField(default=True)
+    is_teacher = models.BooleanField(default=False)
 
 
 @receiver(post_save, sender=CustomUser)
 def create_profile(sender, instance, created, **kwargs):
-    """Create an object of UserProfile when a user CustomUser object is created."""
+    """Create an object of `UserProfile` when a `CustomUser` object is created."""
     if sender and created:
         UserProfile.objects.create(custom_user=instance)
 

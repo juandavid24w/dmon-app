@@ -16,7 +16,7 @@ class StudentRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
             False, otherwise.
 
         """
-        return self.request.user.is_student
+        return self.request.user.userprofile.is_student
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
@@ -36,7 +36,7 @@ class TeacherRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
             False, otherwise.
 
         """
-        return self.request.user.is_teacher
+        return self.request.user.userprofile.is_teacher
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""

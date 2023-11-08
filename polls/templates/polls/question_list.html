@@ -21,12 +21,12 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="text-center">
-                {% if user.is_authenticated and user.is_teacher %}
+                {% if user.is_authenticated and user.userprofile.is_teacher %}
                     <a class="btn btn-warning" href="{% url 'polls:create-question' %}">
                         <i class="fa-solid fa-plus"></i> Create Question
                     </a>
                 {% endif %}
-                {% if user.is_authenticated and user.is_student %}
+                {% if user.is_authenticated and user.userprofile.is_student %}
                     <a class="btn btn-warning disabled"
                        href="{% url 'polls:create-question' %}"
                        role="button"
