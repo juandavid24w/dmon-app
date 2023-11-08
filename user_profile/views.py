@@ -32,8 +32,9 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     model = UserProfile
     form_class = UserProfileUpdateForm
-    template_name = "user_profile/userprofile_update.html"
     success_url = reverse_lazy("user_profile:profile_detail")
+    template_name = "generic_create_update_form.html"
+    extra_context = {"title_text": "Edit Profile", "button_text": "Update"}
 
     def get_object(self, queryset: list = None):
         """Owner of the object should be the current user."""
