@@ -1,12 +1,11 @@
 """User role Mixins."""
-from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from user_profile.mixins import TeacherRequiredMixin
 
 
-class TeacherAuthorRequiredMixin(TeacherRequiredMixin, UserPassesTestMixin):
+class TeacherAuthorRequiredMixin(TeacherRequiredMixin):
     """Teacher role and author of the `Question` object required mixin."""
 
     def dispatch(self, request, *args, **kwargs):
