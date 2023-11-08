@@ -22,6 +22,16 @@
                          height="auto"
                          width="auto">
                 {% endif %}
+                <p>
+                    {% if user.userprofile.is_teacher or user.userprofile.is_student %}
+                        <span class="badge bg-success">
+                            {% if user.userprofile.is_teacher %}Teacher{% endif %}
+                            {% if user.userprofile.is_student %}Student{% endif %}
+                        </span>
+                    {% else %}
+                        <span class="badge bg-success">Free User</span>
+                    {% endif %}
+                </p>
             </div>
         </div>
         <div class="col-md-5"></div>

@@ -1,6 +1,7 @@
 """User role Mixins."""
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 
 
 class StudentRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -16,7 +17,7 @@ class StudentRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
             False, otherwise.
 
         """
-        return self.request.user.is_student
+        return self.request.user.userprofile.is_student
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
@@ -36,8 +37,23 @@ class TeacherRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
             False, otherwise.
 
         """
-        return self.request.user.is_teacher
+        return self.request.user.userprofile.is_teacher
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
         return redirect("polls:question-list")
+
+
+class TeacherAuthorRequiredMixin(TeacherRequiredMixin, UserPassesTestMixin):
+    """Teacher role and author of object required mixin."""
+
+    def dispatch(self, request, *args, **kwargs):
+        """Redirect if the object is not owned by the current user."""
+        obj = self.get_object()
+
+        if obj.author != self.request.user:
+            return redirect(
+                reverse_lazy("polls:question-detail", kwargs={"pk": obj.id})
+            )
+
+        return super().dispatch(request, *args, **kwargs)

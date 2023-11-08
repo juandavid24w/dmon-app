@@ -15,9 +15,6 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    is_student = models.BooleanField(default=False)
-    is_teacher = models.BooleanField(default=False)
-
     objects = CustomUserManager()
 
     def __str__(self):

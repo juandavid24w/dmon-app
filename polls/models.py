@@ -4,6 +4,8 @@ from datetime import timedelta
 from django.db import models
 from django.utils.timezone import now
 
+from users.models import CustomUser
+
 
 class Question(models.Model):
     """Question model class.
@@ -21,8 +23,10 @@ class Question(models.Model):
 
     """
 
-    author = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE, null=True, blank=True)
-    answered_by = models.ManyToManyField("users.CustomUser", related_name="question_users")
+    author = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, null=True, blank=True
+    )
+    answered_by = models.ManyToManyField(CustomUser, related_name="question_users")
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
 
@@ -57,7 +61,7 @@ class Choice(models.Model):
 
     """
 
-    answered_choice = models.ManyToManyField("users.CustomUser", related_name="choice_users")
+    answered_choice = models.ManyToManyField(CustomUser, related_name="choice_users")
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)

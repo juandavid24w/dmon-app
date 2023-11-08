@@ -21,36 +21,14 @@ var teach_email =
 var teach_password = (Math.random().toString(36) + '00000000000000000').slice(2, 12);
 
 describe('Register student', () => {
-    it('Test student register button', () => {
-        cy.visit('/accounts/');
-        cy.contains("I'm a student").click();
-        cy.url().should('include', '/accounts/signup/student');
-    });
-    it('Test student register form', () => {
-        cy.register(
-            '/accounts/signup/student/',
-            stud_firstname,
-            stud_lastname,
-            stud_email,
-            stud_password
-        );
+    it('Test register form', () => {
+        cy.register('/accounts/', stud_firstname, stud_lastname, stud_email, stud_password);
     });
 });
 
 describe('Register teacher', () => {
-    it('Test teacher register button', () => {
-        cy.visit('/accounts/');
-        cy.contains("I'm a teacher").click();
-        cy.url().should('include', '/accounts/signup/teacher');
-    });
     it('Test Register Form', () => {
-        cy.register(
-            '/accounts/signup/teacher/',
-            teach_firstname,
-            teach_lastname,
-            teach_email,
-            teach_password
-        );
+        cy.register('/accounts/', teach_firstname, teach_lastname, teach_email, teach_password);
     });
 });
 
@@ -63,6 +41,17 @@ describe('Student Login', () => {
 describe('Teacher Login', () => {
     it('Test Login Form', () => {
         cy.login(teach_email, teach_password);
+    });
+});
+
+describe('Teacher: Switch Role', () => {
+    beforeEach(() => {
+        cy.login(teach_email, teach_password);
+    });
+    it('Change role', () => {
+        cy.visit('/accounts/profile/update/');
+        cy.get('select').eq(1).select('Teacher').should('have.value', '2');
+        cy.get('form').submit();
     });
 });
 
