@@ -46,7 +46,7 @@ class SignUpViewTestCase(TestCase):
         Tests if registration fails for weak passwords.
 
         """
-        signup_url = reverse("users:student_signup")
+        signup_url = reverse("users:signup")
         response = self.client.post(signup_url, data=params)
         self.assertEqual(response.status_code, status_code)
 
@@ -60,9 +60,7 @@ class LoginTestCase(TestCase):
         self.logout_url = reverse("logout")
 
         self.login_params = {"username": "jdoe@gmail.com", "password": "p@$$W0RDL@rG3"}
-        CustomUser.objects.create_user(
-            email="jdoe@gmail.com", password="p@$$W0RDL@rG3", is_student=True
-        )
+        CustomUser.objects.create_user(email="jdoe@gmail.com", password="p@$$W0RDL@rG3")
 
     def test_loginview(self):
         """Test `LoginView`, it should redirect."""
