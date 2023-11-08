@@ -7,7 +7,6 @@ from user_profile.forms import UserProfileUpdateForm
 from user_profile.models import UserProfile
 
 
-# Create your views here.
 class UserProfileDetailView(LoginRequiredMixin, DetailView):
     """Profile detail view.
 
@@ -37,11 +36,22 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     extra_context = {"title_text": "Edit Profile", "button_text": "Update"}
 
     def get_object(self, queryset: list = None):
-        """Owner of the object should be the current user."""
+        """Get the `UserProfile` object the current logged in user."""
         return self.model.objects.filter(custom_user=self.request.user).first()
 
     def get_context_data(self, **kwargs):
-        """Set the current value of first_name and last_name in the form from the current user."""
+        """Add additional fields to the form.
+
+        In addition to the age, gender, and picture fields of `UserProfile` object,
+        add `first_name` and `last_name` fields of the `CustomUser` to the form.
+
+        As `is_student` and `is_teacher` are boolean fields and mutually exclusive,
+        combine them into a choice field `account_type`.
+
+        Hence, to the `form` to be rendered by Django template, add three fields:
+        `fist_name`, `last_name`, and `account_type`.
+
+        """
         context = super().get_context_data(**kwargs)
         account_type = 1 if self.request.user.userprofile.is_student else 2
         context["form"] = UserProfileUpdateForm(
