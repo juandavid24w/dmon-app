@@ -15,9 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="choice",
             name="answered_choice",
-            field=models.ManyToManyField(
-                related_name="choice_users", to=settings.AUTH_USER_MODEL
-            ),
+            field=models.ManyToManyField(related_name="choice_users", to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name="question",
