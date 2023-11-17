@@ -11,7 +11,7 @@ class UserProfileRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
     def test_func(self) -> bool:
         """Overriding `test_func` to check if the current logged in user is student.
 
-        Returns:
+        Returns
         -------
         bool
             True, when there is a `UserProfile` object for the current user.
@@ -32,13 +32,40 @@ class UserProfileRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
         return redirect("user_profile:profile_create")
 
 
+class UserProfileNotCreatedRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    """User Profile Object Not Created Required Mixin."""
+
+    def test_func(self) -> bool:
+        """Overriding `test_func` to check if the current logged in user is student.
+
+        Returns
+        -------
+        bool
+            True, when there is a `UserProfile` object for the current user.
+            False, otherwise.
+
+        """
+        x = True
+
+        try:
+            x = self.request.user.userprofile
+        except ObjectDoesNotExist:
+            x = True
+
+        return not x
+
+    def handle_no_permission(self):
+        """Handle no permission error, redirect to some other pages."""
+        return redirect("user_profile:profile_detail")
+
+
 class StudentRequiredMixin(UserProfileRequiredMixin, UserPassesTestMixin):
     """Student role required mixin."""
 
     def test_func(self) -> bool:
         """Overriding `test_func` to check if the current logged in user is student.
 
-        Returns:
+        Returns
         -------
         bool
             True, when current user is student.
@@ -59,7 +86,7 @@ class TeacherRequiredMixin(UserProfileRequiredMixin, UserPassesTestMixin):
     def test_func(self) -> bool:
         """Overriding `test_func` to check if the current logged in user is teacher.
 
-        Returns:
+        Returns
         -------
         bool
             True, when current user is student.

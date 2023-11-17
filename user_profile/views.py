@@ -1,5 +1,4 @@
 """User profile view."""
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -83,8 +82,12 @@ class UserProfileUpdateView(mixins.UserProfileRequiredMixin, generic.UpdateView)
         return super().form_valid(form)
 
 
-class UserProfileCreateView(LoginRequiredMixin, generic.CreateView):
-    """Profile create view."""
+class UserProfileCreateView(mixins.UserProfileNotCreatedRequiredMixin, generic.CreateView):
+    """Profile create view.
+
+    Create UserProfile object if it doesn't exist.
+
+    """
 
     model = models.UserProfile
     form_class = forms.UserProfileCreateForm
