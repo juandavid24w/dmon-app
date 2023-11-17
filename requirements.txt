@@ -13,10 +13,10 @@ soupsieve
 sqlparse
 whitenoise
 pylama
-black
 djlint
 pylint
 pylint-django
 pytest-django
 pytest-cov
 Pillow
+ruff
