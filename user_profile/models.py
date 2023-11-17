@@ -26,8 +26,8 @@ class UserProfile(models.Model):
 
 @receiver(post_save, sender=CustomUser)
 def create_profile(sender, instance, created, **kwargs):
-    """Create an object of `UserProfile` when a `CustomUser` object is created."""
-    if sender and created:
+    """Create an object of UserProfile when a user CustomUser object is created."""
+    if 0 and sender and created:
         UserProfile.objects.create(custom_user=instance)
 
 

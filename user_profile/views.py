@@ -1,13 +1,14 @@
 """User profile view."""
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView
 
 from user_profile.forms import UserProfileUpdateForm
 from user_profile.models import UserProfile
+from user_profile.mixins import ProfileRequiredMixin
 
-
-class UserProfileDetailView(LoginRequiredMixin, DetailView):
+# Create your views here.
+class UserProfileDetailView(ProfileRequiredMixin, DetailView):
     """Profile detail view.
 
     Reason why `slug_field` and `slug_url_kwargs` are set as `None`:
@@ -26,7 +27,7 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
         return self.model.objects.filter(custom_user=self.request.user).first()
 
 
-class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+class UserProfileUpdateView(ProfileRequiredMixin, UpdateView):
     """Profile update view."""
 
     model = UserProfile
@@ -88,4 +89,21 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
 
         user_profile.save()
         custom_user.save()
+        return super().form_valid(form)
+
+class UserProfileCreateView(LoginRequiredMixin, CreateView):
+    """Profile create view."""
+
+    model = UserProfile
+    form_class = UserProfileUpdateForm
+    template_name = "generic_create_update_form.html"
+    success_url = reverse_lazy("user_profile:profile_detail")
+
+    def form_valid(self, form: object):
+        """Set custom_user Field of the current object as the current user."""
+        form.instance.custom_user = self.request.user
+        account_type = int(form.cleaned_data["account_type"])
+        form.instance.is_student = account_type == 1
+        form.instance.is_teacher = account_type != 1
+
         return super().form_valid(form)
