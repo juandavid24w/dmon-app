@@ -1,11 +1,12 @@
 """User role Mixins."""
-from profile import Profile
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
-class ProfileRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
-    """Student role required mixin."""
+
+class UserProfileRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
+    """User Profile Object Required Mixin."""
 
     def test_func(self) -> bool:
         """Overriding `test_func` to check if the current logged in user is student.
@@ -13,22 +14,25 @@ class ProfileRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
         Returns:
         -------
         bool
-            True, when current user is student.
+            True, when there is a `UserProfile` object for the current user.
             False, otherwise.
 
         """
-        x = None
+        x = False
+
         try:
             x = self.request.user.userprofile
-        except:
-            pass
+        except ObjectDoesNotExist:
+            x = False
+
         return x
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
         return redirect("user_profile:profile_create")
 
-class StudentRequiredMixin(ProfileRequiredMixin, UserPassesTestMixin):
+
+class StudentRequiredMixin(UserProfileRequiredMixin, UserPassesTestMixin):
     """Student role required mixin."""
 
     def test_func(self) -> bool:
@@ -49,7 +53,7 @@ class StudentRequiredMixin(ProfileRequiredMixin, UserPassesTestMixin):
         return redirect(redirect_url)
 
 
-class TeacherRequiredMixin(ProfileRequiredMixin, UserPassesTestMixin):
+class TeacherRequiredMixin(UserProfileRequiredMixin, UserPassesTestMixin):
     """Teacher role required mixin."""
 
     def test_func(self) -> bool:
