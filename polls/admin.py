@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from polls.models import Choice, Question
+from . import models
 
-admin.site.register(Question)
-admin.site.register(Choice)
+admin.site.register(models.Question)
+admin.site.register(models.Choice)
