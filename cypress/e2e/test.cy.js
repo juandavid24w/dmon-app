@@ -44,12 +44,23 @@ describe('Teacher Login', () => {
     });
 });
 
+describe('Student: Switch Role', () => {
+    beforeEach(() => {
+        cy.login(stud_email, stud_password);
+    });
+    it('Change role', () => {
+        cy.visit('/accounts/profile/create/');
+        cy.get('select').eq(1).select('Student').should('have.value', '1');
+        cy.get('form').submit();
+    });
+});
+
 describe('Teacher: Switch Role', () => {
     beforeEach(() => {
         cy.login(teach_email, teach_password);
     });
     it('Change role', () => {
-        cy.visit('/accounts/profile/update/');
+        cy.visit('/accounts/profile/create/');
         cy.get('select').eq(1).select('Teacher').should('have.value', '2');
         cy.get('form').submit();
     });

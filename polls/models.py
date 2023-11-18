@@ -23,9 +23,7 @@ class Question(models.Model):
 
     """
 
-    author = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, null=True, blank=True
-    )
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
     answered_by = models.ManyToManyField(CustomUser, related_name="question_users")
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")

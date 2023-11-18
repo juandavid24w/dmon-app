@@ -1,6 +1,6 @@
 """Admin app."""
 from django.contrib import admin
 
-from user_profile.models import UserProfile
+from . import models
 
-admin.site.register(UserProfile)
+admin.site.register(models.UserProfile)

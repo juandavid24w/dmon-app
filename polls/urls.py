@@ -1,7 +1,7 @@
 """Polls app URL."""
 from django.urls import path
 
-from polls import views
+from . import views
 
 app_name = "polls"
 

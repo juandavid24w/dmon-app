@@ -6,15 +6,15 @@ from django.urls import reverse, reverse_lazy
 from django.utils.timezone import now
 from django.views import View, generic
 
-from polls.mixins import TeacherAuthorRequiredMixin
-from polls.models import Choice, Question
-from user_profile.mixins import StudentRequiredMixin, TeacherRequiredMixin
+from user_profile import mixins as user_mixins
+
+from . import mixins, models
 
 
-class CreateQuestionView(TeacherRequiredMixin, generic.CreateView):
+class CreateQuestionView(mixins.TeacherRequiredMixin, generic.CreateView):
     """View to create question."""
 
-    model = Question
+    model = models.Question
     fields = ["question_text"]
     success_url = reverse_lazy("polls:question-list")
     template_name = "generic_create_update_form.html"
@@ -32,20 +32,20 @@ class CreateQuestionView(TeacherRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
 
-class UpdateQuestionView(TeacherAuthorRequiredMixin, generic.UpdateView):
+class UpdateQuestionView(mixins.TeacherAuthorRequiredMixin, generic.UpdateView):
     """View to update question."""
 
-    model = Question
+    model = models.Question
     fields = ["question_text", "pub_date"]
     success_url = reverse_lazy("polls:question-list")
     template_name = "generic_create_update_form.html"
     extra_context = {"title_text": "Edit Question", "button_text": "Update"}
 
 
-class DeleteQuestionView(TeacherAuthorRequiredMixin, generic.DeleteView):
+class DeleteQuestionView(mixins.TeacherAuthorRequiredMixin, generic.DeleteView):
     """View to delete question."""
 
-    model = Question
+    model = models.Question
     success_url = reverse_lazy("polls:question-list")
     template_name = "generic_delete_confirm_form.html"
     extra_context = {"title_text": "Delete Question"}
@@ -58,8 +58,8 @@ class QuestionListView(generic.ListView):
 
     """
 
-    model = Question
-    queryset = Question.objects.order_by("-pub_date")[:5]
+    model = models.Question
+    queryset = models.Question.objects.order_by("-pub_date")[:5]
 
 
 class QuestionDetailView(LoginRequiredMixin, generic.DetailView):
@@ -69,13 +69,13 @@ class QuestionDetailView(LoginRequiredMixin, generic.DetailView):
 
     """
 
-    model = Question
+    model = models.Question
 
 
-class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
+class CreateChoiceView(user_mixins.TeacherRequiredMixin, generic.CreateView):
     """View to create choice."""
 
-    model = Choice
+    model = models.Choice
     fields = ["choice_text"]
     template_name = "generic_create_update_form.html"
     extra_context = {"title_text": "Add Choice", "button_text": "Add"}
@@ -104,11 +104,11 @@ class CreateChoiceView(TeacherRequiredMixin, generic.CreateView):
 class ResultsView(LoginRequiredMixin, generic.DetailView):
     """Results view of polls app."""
 
-    model = Question
+    model = models.Question
     template_name = "polls/results.html"
 
 
-class SubmitVote(StudentRequiredMixin, View):
+class SubmitVote(user_mixins.StudentRequiredMixin, View):
     """Vote View."""
 
     def post(self, request: object, question_id: int) -> object:
@@ -118,7 +118,7 @@ class SubmitVote(StudentRequiredMixin, View):
         - Increment the `votes` for the `choice` by one.
 
         """
-        question = get_object_or_404(Question, pk=question_id)
+        question = get_object_or_404(models.Question, pk=question_id)
         try:
             question.answered_by.add(self.request.user)
             selected_choice = question.choice_set.get(pk=request.POST["choice"])
@@ -126,7 +126,7 @@ class SubmitVote(StudentRequiredMixin, View):
             selected_choice.votes += 1
             selected_choice.save()
             question.save()
-        except (KeyError, Choice.DoesNotExist):
+        except (KeyError, models.Choice.DoesNotExist):
             context = {
                 "question": question,
                 "error_message": "You didn't select a choice.",
