@@ -45,12 +45,12 @@ class UserProfileNotCreatedRequiredMixin(LoginRequiredMixin, UserPassesTestMixin
             False, otherwise.
 
         """
-        x = True
+        x = False
 
         try:
             x = self.request.user.userprofile
         except ObjectDoesNotExist:
-            x = True
+            x = False
 
         return not x
 
