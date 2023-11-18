@@ -44,21 +44,16 @@ class UserProfileUpdateView(mixins.UserProfileRequiredMixin, generic.UpdateView)
         In addition to the age, gender, and picture fields of `UserProfile` object,
         add `first_name` and `last_name` fields of the `CustomUser` to the form.
 
-        As `is_student` and `is_teacher` are boolean fields and mutually exclusive,
-        combine them into a choice field `account_type`.
-
-        Hence, to the `form` to be rendered by Django template, add three fields:
-        `fist_name`, `last_name`, and `account_type`.
+        Hence, to the `form` to be rendered by Django template, add two fields:
+        `fist_name` and `last_name`.
 
         """
         context = super().get_context_data(**kwargs)
-        context["form"] = forms.UserProfileUpdateForm(
-            instance=self.request.user.userprofile,
-            initial={
-                "first_name": self.request.user.first_name,
-                "last_name": self.request.user.last_name,
-            },
-        )
+        initial_data = {
+            "first_name": self.request.user.first_name,
+            "last_name": self.request.user.last_name,
+        }
+        context["form"] = forms.UserProfileUpdateForm(initial=initial_data)
         return context
 
     def form_valid(self, form: object):
@@ -94,6 +89,27 @@ class UserProfileCreateView(mixins.UserProfileNotCreatedRequiredMixin, generic.C
     template_name = "generic_create_update_form.html"
     success_url = reverse_lazy("user_profile:profile_detail")
     extra_context = {"title_text": "Create Profile", "button_text": "Create"}
+
+    def get_context_data(self, **kwargs):
+        """Add additional fields to the form.
+
+        In addition to the age, gender, and picture fields of `UserProfile` object,
+        add `first_name` and `last_name` fields of the `CustomUser` to the form.
+
+        As `is_student` and `is_teacher` are boolean fields and mutually exclusive,
+        combine them into a choice field `account_type`.
+
+        Hence, to the `form` to be rendered by Django template, add three fields:
+        `fist_name`, `last_name`, and `account_type`.
+
+        """
+        context = super().get_context_data(**kwargs)
+        initial_data = {
+            "first_name": self.request.user.first_name,
+            "last_name": self.request.user.last_name,
+        }
+        context["form"] = forms.UserProfileCreateForm(initial=initial_data)
+        return context
 
     def form_valid(self, form: object):
         """Set custom_user Field of the current object as the current user.
