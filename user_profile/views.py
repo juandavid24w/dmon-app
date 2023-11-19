@@ -75,13 +75,16 @@ class UserProfileUpdateView(mixins.LoginRequiredMixin, generic.UpdateView):
         - Save the changes made to objects of `user_profile` and `custom_user` objects to the DB.
 
         """
+
         user_profile = form.save(commit=False)
         user_profile.custom_user = self.request.user
+        account_type = int(form.cleaned_data["account_type"])
+        user_profile.is_student = account_type == 1
+        user_profile.is_teacher = account_type == 2
 
         custom_user = self.request.user
         custom_user.first_name = form.cleaned_data["first_name"]
         custom_user.last_name = form.cleaned_data["last_name"]
-
         user_profile.save()
         custom_user.save()
         return super().form_valid(form)
