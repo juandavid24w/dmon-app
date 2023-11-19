@@ -24,14 +24,14 @@ class UserProfileDetailView(mixins.UserProfileRequiredMixin, generic.DetailView)
         return self.model.objects.filter(custom_user=self.request.user).first()
 
 
-class UserProfileUpdateView(mixins.UserProfileRequiredMixin, generic.UpdateView):
+class UserProfileUpdateView(mixins.LoginRequiredMixin, generic.UpdateView):
     """Profile update view."""
 
     model = models.UserProfile
     form_class = forms.UserProfileUpdateForm
     success_url = reverse_lazy("user_profile:profile_detail")
     template_name = "generic_create_update_form.html"
-    extra_context = {"title_text": "Edit Profile", "button_text": "Update"}
+    extra_context = {"title_text": "Update Profile", "button_text": "Update"}
 
     def get_object(self, queryset: list = None):
         """Get the `UserProfile` object the current logged in user."""
