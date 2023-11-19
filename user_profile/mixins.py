@@ -18,18 +18,13 @@ class UserProfileRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
             False, otherwise.
 
         """
-        x = False
-
-        try:
-            x = self.request.user.userprofile
-        except ObjectDoesNotExist:
-            x = False
-
-        return x
+        x = self.request.user.userprofile
+        return x.is_student or x.is_teacher
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
-        return redirect("user_profile:profile_create")
+        return redirect("user_profile:profile_update")
+
 
 
 class UserProfileNotCreatedRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
