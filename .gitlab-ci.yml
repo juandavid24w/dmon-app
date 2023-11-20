@@ -70,6 +70,6 @@ cypress-e2e:
         - .gitlab/cypress_before_install.sh
     script:
         # start the server in the background
-        - python3 manage.py runserver &
+        - python3 manage.py testserver cypress/fixtures/testdb.json --no-input &
         # run Cypress tests
         - npx cypress run --headless
