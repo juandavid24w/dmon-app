@@ -46,7 +46,14 @@ This will download the cypress binaries in `node_modules` directory.
 
 ## Run Cypress E2E tests
 
-To execute all the cypress tests, run the following command:
+### Run the Django TestServer
+Run the Django development server with data from the given fixture (`testdb.json`):
+
+```bash
+python manage.py testserver cypress/fixtures/testdb.json --no-input
+```
+
+To execute all the cypress tests in a browser, run the following command:
 ```bash
 npx cypress open
 ```
@@ -55,3 +62,8 @@ This command will open a browser window. Select the test as `E2E`.
 If there are multiple browsers on your machine, it will prompt to you to choose a browser to run Cypress tests.
 
 Upon choosing a browser to run Cypress tests, click on the `test.cy.js` file to start the tests.
+
+To run the tests browser less:
+```bash
+npx cypress run --headless
+```
