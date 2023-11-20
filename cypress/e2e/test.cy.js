@@ -49,7 +49,7 @@ describe('Student: Switch Role', () => {
         cy.login(stud_email, stud_password);
     });
     it('Change role', () => {
-        cy.visit('/accounts/profile/create/');
+        cy.visit('/accounts/profile/update/');
         cy.get('select').eq(1).select('Student').should('have.value', '1');
         cy.get('form').submit();
     });
@@ -60,7 +60,7 @@ describe('Teacher: Switch Role', () => {
         cy.login(teach_email, teach_password);
     });
     it('Change role', () => {
-        cy.visit('/accounts/profile/create/');
+        cy.visit('/accounts/profile/update/');
         cy.get('select').eq(1).select('Teacher').should('have.value', '2');
         cy.get('form').submit();
     });
