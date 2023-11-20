@@ -47,23 +47,28 @@ class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
         In addition to the age, gender, and picture fields of `UserProfile` object,
         add `first_name` and `last_name` fields of the `CustomUser` to the form.
 
-        Hence, to the `form` to be rendered by Django template, add two fields:
-        `fist_name` and `last_name`.
+        As `is_student` and `is_teacher` are boolean fields and mutually exclusive,
+        combine them into a choice field `account_type`.
+
+        Hence, to the `form` to be rendered by Django template, add three fields:
+        `fist_name`, `last_name`, and `account_type`.
 
         """
         context = super().get_context_data(**kwargs)
-        initial = {
-            "first_name": self.request.user.first_name,
-            "last_name": self.request.user.last_name,
-        }
 
         user_profile = self.request.user.userprofile
         account_type = 0
+
         if user_profile.is_student and not user_profile.is_teacher:
             account_type = 1
         elif not user_profile.is_student and user_profile.is_teacher:
             account_type = 2
-        initial["account_type"] = account_type
+
+        initial = {
+            "first_name": self.request.user.first_name,
+            "last_name": self.request.user.last_name,
+            "account_type": account_type,
+        }
 
         context["form"] = forms.UserProfileUpdateForm(instance=user_profile, initial=initial)
         if account_type != 0:
@@ -83,7 +88,10 @@ class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
         user_profile = form.save(commit=False)
         user_profile.custom_user = self.request.user
 
-        account_type = int(form.cleaned_data["account_type"])
+        account_type = 0
+        if form.cleaned_data.get("account_type"):
+            account_type = int(form.cleaned_data.get("account_type"))
+
         if not (user_profile.is_student or user_profile.is_teacher):
             user_profile.is_student = account_type == STUDENT
             user_profile.is_teacher = account_type == TEACHER
