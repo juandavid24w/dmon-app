@@ -13,7 +13,6 @@ class UserProfileUpdateForm(forms.ModelForm):
     last_name = forms.CharField(max_length=32)
     account_type = forms.ChoiceField(choices=ACCOUNT_CHOICES)
 
-
     class Meta:
         """Meta class."""
 

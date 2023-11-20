@@ -1,8 +1,12 @@
 """User profile view."""
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
 from . import forms, mixins, models
+
+STUDENT, TEACHER = 1, 2
+
 
 # Create your views here.
 class UserProfileDetailView(mixins.UserProfileRequiredMixin, generic.DetailView):
@@ -24,7 +28,7 @@ class UserProfileDetailView(mixins.UserProfileRequiredMixin, generic.DetailView)
         return self.model.objects.filter(custom_user=self.request.user).first()
 
 
-class UserProfileUpdateView(mixins.LoginRequiredMixin, generic.UpdateView):
+class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
     """Profile update view."""
 
     model = models.UserProfile
@@ -64,6 +68,7 @@ class UserProfileUpdateView(mixins.LoginRequiredMixin, generic.UpdateView):
         context["form"] = forms.UserProfileUpdateForm(instance=user_profile, initial=initial)
         if account_type != 0:
             context["form"].fields["account_type"].disabled = True
+
         return context
 
     def form_valid(self, form: object):
@@ -75,18 +80,18 @@ class UserProfileUpdateView(mixins.LoginRequiredMixin, generic.UpdateView):
         - Save the changes made to objects of `user_profile` and `custom_user` objects to the DB.
 
         """
-
         user_profile = form.save(commit=False)
         user_profile.custom_user = self.request.user
+
         account_type = int(form.cleaned_data["account_type"])
-        user_profile.is_student = account_type == 1
-        user_profile.is_teacher = account_type == 2
+        if not (user_profile.is_student or user_profile.is_teacher):
+            user_profile.is_student = account_type == STUDENT
+            user_profile.is_teacher = account_type == TEACHER
 
         custom_user = self.request.user
         custom_user.first_name = form.cleaned_data["first_name"]
         custom_user.last_name = form.cleaned_data["last_name"]
         user_profile.save()
         custom_user.save()
+
         return super().form_valid(form)
-
-
