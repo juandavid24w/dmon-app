@@ -1,17 +1,14 @@
 asgiref
 beautifulsoup4
 coverage
-dj-database-url
 Django
 django-bootstrap5
 fontawesomefree
 gunicorn
 parameterized
-psycopg2-binary
 pytz
 soupsieve
 sqlparse
-whitenoise
 pylama
 djlint
 pylint
@@ -20,3 +17,5 @@ pytest-django
 pytest-cov
 Pillow
 ruff
+dj-database-url
+whitenoise

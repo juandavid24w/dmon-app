@@ -43,8 +43,8 @@
     "[python]": {
         "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.codeActionsOnSave": {
-            "source.organizeImports.ruff": true,
-            "source.fixAll.ruff": true,
+            "source.organizeImports.ruff": "explicit",
+            "source.fixAll.ruff": "explicit"
         },
         "editor.formatOnSave": true,
         "editor.tabSize": 4,
@@ -69,8 +69,8 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.codeActionsOnSave": {
-            "source.organizeImports": true,
-            "source.fixAll": true,
+            "source.organizeImports": "explicit",
+            "source.fixAll": "explicit"
         },
         "editor.formatOnSave": true,
     },
@@ -96,7 +96,7 @@
     "prettier.printWidth": 100,
     "prettier.singleQuote": true,
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+        "source.fixAll.eslint": "explicit"
     },
     "python.languageServer": "Pylance",
     "python.analysis.completeFunctionParens": true,
