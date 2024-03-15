@@ -10,3 +10,6 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 python manage.py migrate --run-syncdb
 python3 manage.py collectstatic --no-input >/dev/null
+rm -rf staticfiles/fontawesomefree/js-packages
+rm -rf staticfiles/fontawesomefree/svgs
+du -sh staticfiles/fontawesomefree/metadata
