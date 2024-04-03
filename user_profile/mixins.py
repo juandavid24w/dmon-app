@@ -1,4 +1,5 @@
 """User role Mixins."""
+
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -17,6 +18,10 @@ class UserProfileRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
             False, otherwise.
 
         """
+        # When test_func is directly called by some function, handle not logged in users here
+        if self.request.user.is_anonymous:
+            return False
+
         userprofile = self.request.user.userprofile
         return userprofile.is_student or userprofile.is_teacher
 
@@ -38,10 +43,14 @@ class StudentRequiredMixin(UserProfileRequiredMixin, UserPassesTestMixin):
             False, otherwise.
 
         """
-        return self.request.user.userprofile.is_student
+        return super().test_func() and self.request.user.userprofile.is_student
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
+        # if parent mixin's test_func fails, call its handle_no_permission instead of handling here
+        if not super().test_func():
+            return super().handle_no_permission()
+
         redirect_url = reverse_lazy("polls:question-list")
         return redirect(redirect_url)
 
@@ -59,9 +68,13 @@ class TeacherRequiredMixin(UserProfileRequiredMixin, UserPassesTestMixin):
             False, otherwise.
 
         """
-        return self.request.user.userprofile.is_teacher
+        return super().test_func() and self.request.user.userprofile.is_teacher
 
     def handle_no_permission(self):
         """Handle no permission error, redirect to some other pages."""
+        # if parent mixin's test_func fails, call its handle_no_permission instead of handling here
+        if not super().test_func():
+            return super().handle_no_permission()
+
         redirect_url = reverse_lazy("polls:question-list")
         return redirect(redirect_url)
